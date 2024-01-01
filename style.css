@@ -1,0 +1,126 @@
+.custom-link {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border-radius: 0.25rem;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .custom-link:hover {
+    color: #007bff;
+    text-decoration: underline  #007bff ; 
+  }
+  .custom-link1:hover {
+    color: #007bff;
+    text-decoration: underline  #007bff ; 
+    
+  }
+  .active{
+    color: #007bff;
+    text-decoration: underline  #007bff ; 
+    
+}
+.card-title{
+  color: #00008B;
+}
+.card-text{
+  color:#1E90FF;
+}
+.image-offerts{
+  width: 80px;
+  height: 80px;
+}
+.card-footer{
+  background-color: white;
+}
+
+
+
+.offerts-cost{
+  color: #4B0082;
+}
+.card {
+  position: relative;
+  padding: 20px;
+width: 100%;
+}
+
+.custom-link {
+  display: inline-block;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+.custom-link:hover {
+  color: #007bff;
+  text-decoration: underline #007bff;
+}
+
+.custom-link1:hover {
+  color: #007bff;
+  text-decoration: underline #007bff;
+}
+
+.active {
+  color: #007bff;
+  text-decoration: underline #007bff;
+}
+
+.card-title {
+  color: #00008B;
+  font-size: 1.2em; /* Dodany rozmiar czcionki */
+  font-weight: bold; /* Pogrubienie tekstu */
+  margin-bottom: 0.5em; /* Odstęp od pozostałej treści */
+}
+
+.offerts-cost {
+  color: #4B0082;
+}
+
+.image-offerts {
+  width: 100%;
+  height: auto; /* Zmieniony sposób skalowania */
+}
+
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Cień */
+  transition: 0.3s;
+  border-radius: 5px; /* Zaokrąglenie rogów */
+  margin: 15px; /* Odstęp między kartami */
+  width: 90%; /* Szerokość karty */
+  display: inline-block; /* Karty wyświetlane obok siebie */
+  vertical-align: top; /* Ustawienie kart w linii */
+}
+
+.card-body {
+  padding: 15px;
+}
+
+.card-footer {
+  background-color: white;
+  text-align: right;
+  padding: 10px;
+}
+
+#name-offerts {
+  color: #9932CC;
+  font-size: 1.1em; /* Dodany rozmiar czcionki */
+  font-weight: bold; /* Pogrubienie tekstu */
+}
+
+.adress-offerts {
+  color: #9932CC;
+  margin-bottom: 0; /* Usunięty odstęp */
+}
+
+.aplicate-offets {
+  font-size: 13px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.aplicate-offets:hover {
+  text-decoration: underline; /* Dodanie podkreślenia przy najechaniu */
+}
