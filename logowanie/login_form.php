@@ -13,12 +13,6 @@ if(isset($_POST['submit'])){
   if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
     $error = 'Nieprawidłowy adres e-mail!';
   }
-
-  // Check if passwords are the same
-  if($pass != $_POST['password']){
-    $error[] = 'Hasła nie są takie same!';
-  }
-
   if(!isset($error)){
     // Check if user exists in database
     $select = "SELECT * FROM konto WHERE email = '$email' AND haslo = '$pass'";
@@ -27,7 +21,9 @@ if(isset($_POST['submit'])){
 
     if(mysqli_num_rows($result) > 0){
       $_SESSION['usermail'] = $email;
-      header('location:Glowna.php');
+      $_SESSION['czyfirma'] = $firma;
+      header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
+
     }else{
       $error[] = 'Wpisałeś niepoprawny e-mail lub hasło!';
     }

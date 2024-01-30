@@ -1,9 +1,7 @@
 <?php
 
 @include 'config.php';
-
 session_start();
-
 if(isset($_POST['submit'])){
 
   $email = mysqli_real_escape_string($conn, $_POST['usermail']);
@@ -24,7 +22,12 @@ if(isset($_POST['submit'])){
     if($pass != $cpass){
       $error[] = 'Hasła nie są takie same!';
     }else{
-      $insert = "INSERT INTO konto(email, haslo, admin) VALUES('$email','$pass','$admin')";
+      if (isset($_POST['checkboxfirma']) && $_POST['checkboxfirma'] == 1):
+        $firma = 'TAK';
+      else:
+        $firma = 'NIE';
+      endif;
+      $insert = "INSERT INTO konto(email, haslo, admin, firma) VALUES('$email','$pass','$admin','$firma')";
       mysqli_query($conn, $insert);
       header('location:login_form.php');
     }
@@ -60,7 +63,7 @@ if(isset($_POST['submit'])){
       <input type="email" name="usermail" placeholder="Wpisz tutaj swoj e-mail" class="box" required><br>
       <div class="textt"> Podaj hasło: </div><input type="password" name="password" placeholder="Wpisz tutaj swoje hasło" class="box" required><br>
       <div class="textt"> Powtórz hasło: </div><input type="password" name="cpassword" placeholder="Powtórz hasło które wpisałeś powyżej" class="box" required><br>
-
+      <input type="checkbox" name="checkboxfirma" value="1" id="checkboxfirma"><label for="checkboxfirma">Zarejestruj jako firma</label><br>
       <input type="submit" value="Zarejestruj się!" class="form-btn" name="submit">
       <p>Masz już konto?<a href="login_form.php">Zaloguj się!</a></p>
     </form>

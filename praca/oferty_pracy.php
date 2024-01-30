@@ -23,7 +23,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item custom-link1">
-          <a href="../glowna.html" class="nav-link">
+          <a href="../glowna.php" class="nav-link">
             Główna
           </a>
         </li>
@@ -33,20 +33,20 @@
           </a>
         </li>
         <li class="nav-item custom-link1">
-          <a href="../uzytkownik/profil.html" class="nav-link">
+          <a href="../uzytkownik/profil.php" class="nav-link">
             Mój profil
           </a>
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
-          <a href="../praca/ogloszenie_dodaj.html" class="nav-link custom-link me-3">
+          <a href="../praca/ogloszenie_dodaj.php" class="nav-link custom-link me-3">
             Moje konto
             <img class="d-inline-block align-top" src="../images/account.png" style="height: 30px;" />
           </a>
         </li>
         <li class="nav-item">
-          <a href="../praca/ogloszenie_dodaj.html" class="nav-link custom-link me-2">
+          <a href="../praca/ogloszenie_dodaj.php" class="nav-link custom-link me-2">
             Dodaj ogłoszenie
             <img class="d-inline-block align-top" src="../images/icon_add.png" style="height: 30px;" />
           </a>
