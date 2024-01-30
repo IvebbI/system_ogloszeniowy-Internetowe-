@@ -1,8 +1,6 @@
 <?php
   session_start();
- if(!isset($_SESSION['usermail'])){
-    header('location:/system_ogloszeniowy-Internetowe-/logowanie/login_form.php');
- }
+ 
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +20,7 @@
 <body >
 
   <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a href="glowna.html" class="navbar-brand mx-3">
+    <a href="glowna.php" class="navbar-brand mx-3">
       <img class="d-inline-block align-top" src="images/logo.jpg" />
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -31,7 +29,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item custom-link1">
-          <a href="glowna.html" class="nav-link active">
+          <a href="glowna.php" class="nav-link active">
             Główna
           </a>
         </li>
@@ -40,30 +38,83 @@
             Oferty pracy
           </a>
         </li>
-        <li class="nav-item custom-link1">
-          <a href="uzytkownik/profil.php" class="nav-link">
-            Mój profil
-          </a>
-        </li>
+        <?php
+          if(isset($_SESSION['id'])){
+            echo <<<html
+            <li class="nav-item custom-link1">
+              <a href="uzytkownik/profil.php" class="nav-link">
+                Mój profil
+              </a>
+            </li>
+       
+            html;
+          }
+        ?>
       </ul>
       <ul class="navbar-nav ms-auto">
+
+      <?php
+          if(isset($_SESSION['id'])){
+            echo <<<html
         <li class="nav-item">
           <a href="praca/ogloszenie_dodaj.php" class="nav-link custom-link me-3">
             Moje konto
             <img class="d-inline-block align-top" src="images/account.png" style="height: 30px;" />
           </a>
         </li>
+        html;
+      }
+      
+
+          if(isset($_SESSION['czyadmin'])  && $_SESSION['czyfirma']=='TAK'){
+
+            echo <<<html
         <li class="nav-item">
           <a href="praca/ogloszenie_dodaj.php" class="nav-link custom-link me-2">
             Dodaj ogłoszenie
             <img class="d-inline-block align-top" src="images/icon_add.png" style="height: 30px;" />
           </a>
         </li>
+        html;
+      }
+      
+      if(isset($_SESSION['czyadmin']) && $_SESSION['czyadmin']=='TAK'){
+        echo <<<html
+        <li class="nav-item">
+        <a href="../adminpanel/admin-panel.php" class="nav-link custom-link me-2">
+          Panel Admin
+          <img class="d-inline-block align-top" src="images/adminpanelzdj.png" style="height: 30px;" />
+        </a>
+      </li>
+    html;
+  }
+          if(isset($_SESSION['id'])){
+            echo <<<html
         <li class="nav-item">
           <a href="logowanie/logout.php" class="nav-link custom-link me-2">
             Wyloguj się
           </a>
         </li>
+        html;
+      }
+      
+?>
+   
+  <li class="nav-item">
+  <?php
+          if(!isset($_SESSION['id'])){
+            echo <<<html
+<a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
+  Zaloguj się
+</a>
+html;
+          }
+          ?>
+</li>
+
+
+
+    
       </ul>
       
     </div>

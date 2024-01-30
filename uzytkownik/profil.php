@@ -1,9 +1,21 @@
 <?php
   session_start();
-  if(!isset($_SESSION['usermail'])){
+  if(!isset($_SESSION['id'])){
      header('location:/system_ogloszeniowy-Internetowe-/logowanie/login_form.php');
   }
- 
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "baza_systemogloszeniowy";
+  
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  
+  if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
+  }
+  $id=$_SESSION['id'];
+  $sql = "SELECT * FROM uzytkownik WHERE id_konta = $id";
+  $result = $conn->query($sql)->fetch_object();
 
 ?>
 <!DOCTYPE html>
@@ -22,7 +34,7 @@
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a href="glowna.html" class="navbar-brand mx-3">
+    <a href="../glowna.php" class="navbar-brand mx-3">
       <img class="d-inline-block align-top" src="../images/logo.jpg" />
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -53,17 +65,38 @@
             <img class="d-inline-block align-top" src="../images/account.png" style="height: 30px;" />
           </a>
         </li>
+        <?php 
+                  if(isset($_SESSION['czyfirma']) && $_SESSION['czyfirma']=='TAK'){
+                    echo <<<html
         <li class="nav-item">
           <a href="../praca/ogloszenie_dodaj.php" class="nav-link custom-link me-2">
             Dodaj ogłoszenie
             <img class="d-inline-block align-top" src="../images/icon_add.png" style="height: 30px;" />
           </a>
         </li>
-        <li class="nav-item">
-          <a href="logowanie/logout.php" class="nav-link custom-link me-2">
-            Wyloguj się
-          </a>
-        </li>
+        html;
+                  }
+        
+                  if(isset($_SESSION['czyadmin']) && $_SESSION['czyadmin']=='TAK'){
+                    echo <<<html
+                    <li class="nav-item">
+                    <a href="../adminpanel/admin-panel.php" class="nav-link custom-link me-2">
+                      Panel Admin
+                      <img class="d-inline-block align-top" src="../images/adminpanelzdj.png" style="height: 30px;" />
+                    </a>
+                  </li>
+                html;
+              }
+                  if(isset($_SESSION['id'])){
+                    echo <<<html
+                <li class="nav-item">
+                  <a href="/system_ogloszeniowy-Internetowe-/logowanie/logout.php" class="nav-link custom-link me-2">
+                    Wyloguj się
+                  </a>
+                </li>
+                html;
+              }
+        ?>
       </ul>
     </div>
   </nav>
@@ -76,15 +109,7 @@
           <h1>Mój Profil</h1>
           <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
         <form>
-          <!-- <div class="mb-3">
-            <label for="email1" class="form-label mt-3">E-mail:</label>
-            <input type="email" class="form-control mt-1" id="email1" aria-describedby="emailHelp">
-            <label for="imie1" class="form-label mt-3">Imie:</label>
-            <input type="text" class="form-control mt-1" id="imie1" aria-describedby="emailHelp">
-            <label for="imie1" class="form-label mt-3">Nazwisko:</label>
-            <input type="text" class="form-control mt-1" id="imie1" aria-describedby="emailHelp">
-           
-          </div> -->
+
           <div class="accordion" id="accordionExample">
             <div class="accordion-item">
               <h2 class="accordion-header">
@@ -98,7 +123,7 @@
                       <img src="https://hubertkajdan.com/wp-content/uploads/2019/06/2019-06-20-Jezioro-Lednickie-010-Pano-1024x663.jpg" height="200px">
                       <input type="file" class="form-control mt-3" id="imgsrc" aria-describedby="emailHelp">
                       <label for="email1" class="form-label mt-1" >E-mail</label>
-                      <input type="text" class="form-control mt-3" id="imgsrc" aria-describedby="emailHelp">
+                      <input type="text" class="form-control mt-3" id="imgsrc" aria-describedby="emailHelp" value="">
                       <label for="email1" class="form-label mt-1" >Link Github:</label>
                       <input type="text" class="form-control mt-1" id="email1" aria-describedby="emailHelp">
                       <label for="text1" class="form-label mt-3">Imie:</label>

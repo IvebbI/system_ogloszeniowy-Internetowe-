@@ -17,7 +17,7 @@ if(isset($_POST['submit'])){
     $select = "SELECT * FROM konto WHERE email = '$email' AND haslo = '$pass'";
 
     $result = $conn -> query($select) -> fetch_assoc();
-    $_SESSION['usermail'] =  $result['email'];
+    $_SESSION['id'] =  $result['id'];
     $_SESSION['czyfirma'] = $result['firma'];
     $_SESSION['czyadmin'] = $result['admin'];
 
@@ -57,6 +57,7 @@ if(isset($_POST['submit'])){
       <div class="textt"> Podaj hasło: </div><input type="password" name="password" placeholder="Wpisz tutaj swoje hasło" class="box" required><br>
       <input type="submit" value="Zaloguj się!" name="submit" class="form-btn">
       <p>Nie masz konta?<a href="register_form.php">Zarejestruj się!</a></p>
+      <p>Wejdź bez konta <a href="../glowna.php">Link</a></p>
     </form>
 
   </div>
