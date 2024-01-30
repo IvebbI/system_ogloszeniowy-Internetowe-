@@ -1,3 +1,10 @@
+<?php
+  session_start();
+  if(!isset($_SESSION['usermail'])){
+     header('location:/system_ogloszeniowy-Internetowe-/logowanie/login_form.php');
+  }
+ 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -49,6 +56,11 @@
           <a href="../praca/ogloszenie_dodaj.php" class="nav-link custom-link me-2">
             Dodaj ogłoszenie
             <img class="d-inline-block align-top" src="../images/icon_add.png" style="height: 30px;" />
+          </a>
+        </li>
+        <li class="nav-item">
+          <a href="logowanie/logout.php" class="nav-link custom-link me-2">
+            Wyloguj się
           </a>
         </li>
       </ul>

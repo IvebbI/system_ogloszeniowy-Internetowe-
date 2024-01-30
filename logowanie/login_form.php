@@ -8,7 +8,6 @@ if(isset($_POST['submit'])){
 
   $email = mysqli_real_escape_string($conn, $_POST['usermail']);
   $pass = md5($_POST['password']);
-
   // Check if email is valid
   if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
     $error = 'Nieprawidłowy adres e-mail!';
@@ -17,16 +16,13 @@ if(isset($_POST['submit'])){
     // Check if user exists in database
     $select = "SELECT * FROM konto WHERE email = '$email' AND haslo = '$pass'";
 
-    $result = mysqli_query($conn, $select);
+    $result = $conn -> query($select) -> fetch_assoc();
+    $_SESSION['usermail'] =  $result['email'];
+    $_SESSION['czyfirma'] = $result['firma'];
+    $_SESSION['czyadmin'] = $result['admin'];
 
-    if(mysqli_num_rows($result) > 0){
-      $_SESSION['usermail'] = $email;
-      $_SESSION['czyfirma'] = $firma;
-      header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
 
-    }else{
-      $error[] = 'Wpisałeś niepoprawny e-mail lub hasło!';
-    }
+    header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
   }
 
 }
