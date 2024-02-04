@@ -6,25 +6,36 @@ session_start();
 
 if(isset($_POST['submit'])){
 
-  $email = mysqli_real_escape_string($conn, $_POST['usermail']);
-  $pass = md5($_POST['password']);
-  // Check if email is valid
-  if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-    $error = 'Nieprawidłowy adres e-mail!';
-  }
-  if(!isset($error)){
-    // Check if user exists in database
-    $select = "SELECT * FROM konto WHERE email = '$email' AND haslo = '$pass'";
+    $email = mysqli_real_escape_string($conn, $_POST['usermail']);
+    $password = md5($_POST['password']);
 
-    $result = $conn -> query($select) -> fetch_assoc();
-    $_SESSION['id'] =  $result['id'];
-    $_SESSION['czyfirma'] = $result['firma'];
-    $_SESSION['czyadmin'] = $result['admin'];
+    // Check if email is valid
+    if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+        $error = 'Nieprawidłowy adres e-mail!';
+    }
 
+    if(!isset($error)){
+        // Check if user exists in database
+        $select = "SELECT * FROM konto WHERE email = '$email'";
+        $result = $conn->query($select);
 
-    header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
-  }
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
 
+            // Check if password is correct
+            if ($row['haslo'] == $password) {
+                $_SESSION['id'] =  $row['Id'];
+                $_SESSION['czyfirma'] = $row['firma'];
+                $_SESSION['czyadmin'] = $row['admin'];
+
+                header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
+            } else {
+                $error = 'Nieprawidłowe hasło!';
+            }
+        } else {
+            $error = 'Nieprawidłowy adres e-mail lub użytkownik nie istnieje!';
+        }
+    }
 }
 
 ?>
@@ -36,7 +47,7 @@ if(isset($_POST['submit'])){
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="style-logowanie.css">
 </head>
 <body>
   <div class="form-container">
@@ -46,7 +57,11 @@ if(isset($_POST['submit'])){
 
       <?php
         if(isset($error)){
-          foreach($error as $error){
+          if(is_array($error) || is_object($error)){
+            foreach($error as $errorItem){
+              echo '<span class="error-msg">'.$errorItem.'</span>';
+            }
+          } else {
             echo '<span class="error-msg">'.$error.'</span>';
           }
         }
@@ -55,9 +70,9 @@ if(isset($_POST['submit'])){
       <div class="textt">Podaj e-mail:</div>
       <input type="email" name="usermail" placeholder="Wpisz tutaj swoj e-mail" class="box" required><br>
       <div class="textt"> Podaj hasło: </div><input type="password" name="password" placeholder="Wpisz tutaj swoje hasło" class="box" required><br>
+      <div class="przywroc-haslo">Nie pamiętasz hasła?<a href="reset-password.php" class="margin-left-10">Zresetuj hasło</a><br></div>
       <input type="submit" value="Zaloguj się!" name="submit" class="form-btn">
-      <p>Nie masz konta?<a href="register_form.php">Zarejestruj się!</a></p>
-      <p>Wejdź bez konta <a href="../glowna.php">Link</a></p>
+      <p>Nie masz konta?<a href="register_form.php" class="margin-left-10">Zarejestruj się!</a></p>
     </form>
 
   </div>

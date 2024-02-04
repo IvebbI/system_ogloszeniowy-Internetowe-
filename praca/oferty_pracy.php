@@ -38,15 +38,16 @@
           </a>
         </li>
         <?php
-          if(isset($_SESSION['id'])){
-            echo <<<html
-        <li class="nav-item custom-link1">
-          <a href="../uzytkownik/profil.php" class="nav-link">
-            Mój profil
-          </a>
-        </li>
-        html;
-          }
+              if(isset($_SESSION['czyadmin'])  && $_SESSION['czyfirma']){
+                echo <<<html
+                <li class="nav-item custom-link1">
+                  <a href="../uzytkownik/profil.php" class="nav-link">
+                    Mój profil
+                  </a>
+                </li>
+           
+                html;
+              }
           ?>
           
       </ul>
@@ -84,26 +85,26 @@
       </li>
     html;
   }
-        if(isset($_SESSION['id'])){
-          echo <<<html
-        <li class="nav-item">
-          <a href="logowanie/logout.php" class="nav-link custom-link me-2">
-            Wyloguj się
-          </a>
-        </li>
-        html;
-      }
+  if (isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])) {
+    echo <<<html
+        <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
+            Zaloguj się
+        </a>
+    html;
+  }
+  if(isset($_SESSION['czyadmin'])){
+
+    echo <<<html
+<li class="nav-item">
+  <a href="/system_ogloszeniowy-Internetowe-/logowanie/logout.php" class="nav-link custom-link me-2">
+    Wyloguj się
+  </a>
+</li>
+html;
+}
       
    
-      if(!isset($_SESSION['id'])){
-        echo <<<html
-              <li class="nav-item">
-          <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
-            Zaloguj się
-          </a>
-        </li>
-        html;
-    }
+
         ?>
       </ul>
     </div>

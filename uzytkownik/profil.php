@@ -1,23 +1,47 @@
 <?php
-  session_start();
-  if(!isset($_SESSION['id'])){
-     header('location:/system_ogloszeniowy-Internetowe-/logowanie/login_form.php');
-  }
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "baza_systemogloszeniowy";
-  
-  $conn = new mysqli($servername, $username, $password, $dbname);
-  
-  if ($conn->connect_error) {
-      die("Connection failed: " . $conn->connect_error);
-  }
-  $id=$_SESSION['id'];
-  $sql = "SELECT * FROM uzytkownik WHERE id_konta = $id";
-  $result = $conn->query($sql)->fetch_object();
+session_start();
 
+
+
+
+include '../logowanie/config.php';
+
+if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
+
+    $query = "SELECT * FROM konto
+              LEFT JOIN doswiadczenie ON konto.id = doswiadczenie.id
+              LEFT JOIN wyksztalcenie ON konto.id = wyksztalcenie.id
+              LEFT JOIN link ON konto.id = link.id
+              LEFT JOIN jezyk ON konto.id = jezyk.id
+              LEFT JOIN kurs ON konto.id = kurs.id
+              LEFT JOIN umiejetnosc ON konto.id = umiejetnosc.id
+              LEFT JOIN uzytkownik ON konto.id = uzytkownik.id
+              WHERE konto.id = $userId";
+
+
+    if (!$result = $conn->query($query)) {
+        echo "Błąd zapytania SQL: " . $conn->error;
+        exit();
+    }
+
+
+
+    if ($result->num_rows > 0) {
+        $userData = $result->fetch_assoc();
+
+
+    } else {
+        echo "Brak danych lub błąd zapytania.";
+    }
+} else {
+    echo "Brak sesji użytkownika.";
+}
+
+// Zamykanie połączenia z bazą danych po zakończeniu operacji
+$conn->close();
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,12 +83,7 @@
         </li>
       </ul>
       <ul class="navbar-nav ms-auto">
-        <li class="nav-item">
-          <a href="../praca/ogloszenie_dodaj.php" class="nav-link custom-link me-3">
-            Moje konto
-            <img class="d-inline-block align-top" src="../images/account.png" style="height: 30px;" />
-          </a>
-        </li>
+
         <?php 
                   if(isset($_SESSION['czyfirma']) && $_SESSION['czyfirma']=='TAK'){
                     echo <<<html
@@ -87,15 +106,23 @@
                   </li>
                 html;
               }
-                  if(isset($_SESSION['id'])){
-                    echo <<<html
-                <li class="nav-item">
-                  <a href="/system_ogloszeniowy-Internetowe-/logowanie/logout.php" class="nav-link custom-link me-2">
-                    Wyloguj się
-                  </a>
-                </li>
+              if (isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])) {
+                echo <<<html
+                    <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
+                        Zaloguj się
+                    </a>
                 html;
               }
+              if(isset($_SESSION['czyadmin']) || isset($_SESSION['id'])){
+
+                echo <<<html
+            <li class="nav-item">
+              <a href="../logowanie/logout.php" class="nav-link custom-link me-2">
+                Wyloguj się
+              </a>
+            </li>
+            html;
+          }
         ?>
       </ul>
     </div>
@@ -123,19 +150,19 @@
                       <img src="https://hubertkajdan.com/wp-content/uploads/2019/06/2019-06-20-Jezioro-Lednickie-010-Pano-1024x663.jpg" height="200px">
                       <input type="file" class="form-control mt-3" id="imgsrc" aria-describedby="emailHelp">
                       <label for="email1" class="form-label mt-1" >E-mail</label>
-                      <input type="text" class="form-control mt-3" id="imgsrc" aria-describedby="emailHelp" value="">
+                      <input type="text" class="form-control mt-3" id="email1" aria-describedby="emailHelp" value="<?php echo isset($userData['email']) ? $userData['email'] : ''; ?>">
                       <label for="email1" class="form-label mt-1" >Link Github:</label>
-                      <input type="text" class="form-control mt-1" id="email1" aria-describedby="emailHelp">
+                      <input type="text" class="form-control mt-1" id="email1" aria-describedby="emailHelp" value="<?php echo isset($userData['adres_url']) ? $userData['adres_url'] : ''; ?>">
                       <label for="text1" class="form-label mt-3">Imie:</label>
-                      <input type="text" class="form-control mt-1" id="text1" aria-describedby="emailHelp">
+                      <input type="text" class="form-control mt-1" id="text1" aria-describedby="emailHelp" value="<?php echo isset($userData['imie']) ? $userData['imie'] : ''; ?>">
                       <label for="text2" class="form-label mt-3">Nazwisko:</label>
-                      <input type="text" class="form-control mt-1" id="text2" aria-describedby="emailHelp">
-                      <label for="date1" class="form-label mt-3">Data urodzenia:</label>
-                      <input type="date" class="form-control mt-1" id="date1" aria-describedby="emailHelp">
+                      <input type="text" class="form-control mt-1" id="text2" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwisko']) ? $userData['nazwisko'] : ''; ?>">
+                      <label for="date1" class="form-label mt-3">Data urodzenia:<br></label>
+                      <input type="date" class="form-control mt-1" id="date1" aria-describedby="emailHelp" value="<?php echo isset($userData['data_urodzenia']) ? $userData['data_urodzenia'] : ''; ?>" >
                       <label for="tel1" class="form-label mt-3">Numer telefonu:</label>
-                      <input type="tel" class="form-control mt-1" id="tel1" aria-describedby="emailHelp">
+                      <input type="tel" class="form-control mt-1" id="tel1" aria-describedby="emailHelp" value="<?php echo isset($userData['numer_telefonu']) ? $userData['numer_telefonu'] : ''; ?>">
                       <label for="text3" class="form-label mt-3">Miejsce zamieszkania:</label>
-                      <input type="text" class="form-control mt-1" id="text3" aria-describedby="emailHelp">
+                      <input type="text" class="form-control mt-1" id="text3" aria-describedby="emailHelp" value="<?php echo isset($userData['miejsce_zamieszkania']) ? $userData['miejsce_zamieszkania'] : ''; ?>">
                     </div>
                     <button type="submit" class="btn btn-primary">Zapisz</button>
                 </div>
