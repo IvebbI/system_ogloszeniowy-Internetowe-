@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $insert = "INSERT INTO konto(email, haslo, admin, firma, kod_weryfikacyjny) VALUES('$email','$hashedPassword','$admin','$firma', '$kodWeryfikacyjny')";
+            $insert = "INSERT INTO konto(email, haslo, admin, firma) VALUES('$email','$hashedPassword','$admin','$firma')";
             mysqli_query($conn, $insert);
 
             $mail = new PHPMailer(true);

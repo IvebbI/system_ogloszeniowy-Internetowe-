@@ -106,14 +106,14 @@ $conn->close();
                   </li>
                 html;
               }
-              if (isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])) {
+              if (!isset($_SESSION['id'])) {
                 echo <<<html
                     <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
                         Zaloguj się
                     </a>
                 html;
               }
-              if(isset($_SESSION['czyadmin']) || isset($_SESSION['id'])){
+              if(isset($_SESSION['id'])){
 
                 echo <<<html
             <li class="nav-item">

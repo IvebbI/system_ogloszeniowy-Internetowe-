@@ -39,7 +39,7 @@
           </a>
         </li>
         <?php
-            if(isset($_SESSION['czyadmin'])  && $_SESSION['czyfirma']){
+            if(isset($_SESSION['id'])){
             echo <<<html
             <li class="nav-item custom-link1">
               <a href="uzytkownik/profil.php" class="nav-link">
@@ -96,7 +96,7 @@
    
   <li class="nav-item">
   <?php
-if (isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])) {
+if (!isset($_SESSION['id'])) {
   echo <<<html
       <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
           Zaloguj się

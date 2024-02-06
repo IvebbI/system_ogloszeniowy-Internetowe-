@@ -9,25 +9,24 @@ if(isset($_POST['submit'])){
     $email = mysqli_real_escape_string($conn, $_POST['usermail']);
     $password = md5($_POST['password']);
 
-    // Check if email is valid
+
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $error = 'Nieprawidłowy adres e-mail!';
     }
 
     if(!isset($error)){
-        // Check if user exists in database
         $select = "SELECT * FROM konto WHERE email = '$email'";
         $result = $conn->query($select);
 
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            // Check if password is correct
+
             if ($row['haslo'] == $password) {
                 $_SESSION['id'] =  $row['Id'];
                 $_SESSION['czyfirma'] = $row['firma'];
                 $_SESSION['czyadmin'] = $row['admin'];
-
+                
                 header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
             } else {
                 $error = 'Nieprawidłowe hasło!';

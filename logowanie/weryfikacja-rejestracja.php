@@ -7,13 +7,9 @@ if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_POST['usermail']);
     $kodWeryfikacyjny = $_POST['verification_code'];
 
-    // Check if email is valid
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $error[] = 'Nieprawidłowy adres e-mail!';
-    }
+
 
     if (!isset($error)) {
-        // Check if user exists in database
         $select = "SELECT * FROM konto WHERE email = '$email' AND kod_weryfikacyjny = '$kodWeryfikacyjny'";
         $result = mysqli_query($conn, $select);
 
@@ -21,18 +17,17 @@ if (isset($_POST['submit'])) {
             $userData = mysqli_fetch_assoc($result);
 
             if ($userData) {
-                // Dodaj dane do bazy podczas weryfikacji
                 $admin = "NIE";
                 $firma = isset($_SESSION['registration_data']['checkboxfirma']) && $_SESSION['registration_data']['checkboxfirma'] == 1 ? 'TAK' : 'NIE';
-                $hashedPassword = $userData['haslo']; // Pobierz hasło z bazy danych
+                $hashedPassword = $userData['haslo']; 
 
-                $insert = "INSERT INTO konto(email, haslo, admin, firma, kod_weryfikacyjny) VALUES('$email','$hashedPassword','$admin','$firma', '$kodWeryfikacyjny')";
+                $insert = "INSERT INTO konto(email, haslo, admin, firma) VALUES('$email','$hashedPassword','$admin','$firma')";
                 $result_insert = mysqli_query($conn, $insert);
 
                 if ($result_insert) {
                     $_SESSION['id'] =  $userData['id'];
-                    $_SESSION['czyfirma'] = $firma; // Ustaw wartość czyfirma na $firma
-                    $_SESSION['czyadmin'] = $admin; // Ustaw wartość czyadmin na $admin
+                    $_SESSION['czyfirma'] = $firma; 
+                    $_SESSION['czyadmin'] = $admin; 
 
                     header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
                     exit;

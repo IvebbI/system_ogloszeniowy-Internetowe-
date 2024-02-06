@@ -38,7 +38,7 @@
           </a>
         </li>
         <?php
-              if(isset($_SESSION['czyadmin'])  && $_SESSION['czyfirma']){
+              if(isset($_SESSION['id'])){
                 echo <<<html
                 <li class="nav-item custom-link1">
                   <a href="../uzytkownik/profil.php" class="nav-link">
@@ -55,16 +55,7 @@
       <ul class="navbar-nav ms-auto">
 
       <?php
-          if(isset($_SESSION['id'])){
-            echo <<<html
-        <li class="nav-item">
-          <a href="../praca/ogloszenie_dodaj.php" class="nav-link custom-link me-3">
-            Moje konto
-            <img class="d-inline-block align-top" src="../images/account.png" style="height: 30px;" />
-          </a>
-        </li>
-        html;
-          }
+
           if(isset($_SESSION['czyadmin']) && $_SESSION['czyfirma']=='TAK'){
             echo <<<html
         <li class="nav-item">
@@ -85,14 +76,14 @@
       </li>
     html;
   }
-  if (isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])) {
+  if (!isset($_SESSION['id'])) {
     echo <<<html
         <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
             Zaloguj się
         </a>
     html;
   }
-  if(isset($_SESSION['czyadmin'])){
+  if(isset($_SESSION['id'])){
 
     echo <<<html
 <li class="nav-item">
