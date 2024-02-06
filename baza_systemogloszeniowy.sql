@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sty 30, 2024 at 08:27 AM
--- Wersja serwera: 10.4.32-MariaDB
--- Wersja PHP: 8.2.12
+-- Generation Time: Feb 06, 2024 at 10:37 AM
+-- Wersja serwera: 10.4.28-MariaDB
+-- Wersja PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -150,7 +150,7 @@ CREATE TABLE `konto` (
 --
 
 INSERT INTO `konto` (`Id`, `email`, `haslo`, `admin`, `firma`) VALUES
-(1, 'knurowskikarol12345@gmail.com', '202cb962ac59075b964b07152d234b70', 'NIE', ''),
+(1, 'knurowskikarol12345@gmail.com', '202cb962ac59075b964b07152d234b70', 'TAK', ''),
 (2, 's@s', '202cb962ac59075b964b07152d234b70', 'NIE', 'NIE'),
 (3, 'test@s', '202cb962ac59075b964b07152d234b70', 'NIE', 'TAK'),
 (4, 's@asdasd', '202cb962ac59075b964b07152d234b70', 'NIE', 'NIE'),
@@ -276,9 +276,8 @@ CREATE TABLE `uzytkownik` (
   `imie` varchar(50) DEFAULT NULL,
   `nazwisko` varchar(50) DEFAULT NULL,
   `data_urodzenia` date DEFAULT NULL,
-  `adres_email` varchar(100) DEFAULT NULL,
   `numer_telefonu` varchar(20) DEFAULT NULL,
-  `zdjecie_profilowe` blob DEFAULT NULL,
+  `zdjecie_profilowe` text DEFAULT NULL,
   `miejsce_zamieszkania` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -286,17 +285,17 @@ CREATE TABLE `uzytkownik` (
 -- Dumping data for table `uzytkownik`
 --
 
-INSERT INTO `uzytkownik` (`id`, `imie`, `nazwisko`, `data_urodzenia`, `adres_email`, `numer_telefonu`, `zdjecie_profilowe`, `miejsce_zamieszkania`) VALUES
-(1, 'Jan', 'Kowalski', '1990-05-15', 'jan@example.com', '123456789', 0x7a646a656369655f6a616e2e6a7067, 'Warszawa'),
-(2, 'Anna', 'Nowak', '1988-12-10', 'anna@example.com', '987654321', 0x7a646a656369655f616e6e612e6a7067, 'Kraków'),
-(3, 'Piotr', 'Lewandowski', '1995-07-20', 'piotr@example.com', '456123789', 0x7a646a656369655f70696f74722e6a7067, 'Gdańsk'),
-(4, 'Magda', 'Wójcik', '1993-03-25', 'magda@example.com', '789654321', 0x7a646a656369655f6d616764612e6a7067, 'Poznań'),
-(5, 'Marek', 'Dąbrowski', '1987-10-30', 'marek@example.com', '654789321', 0x7a646a656369655f6d6172656b2e6a7067, 'Łódź'),
-(6, 'Karolina', 'Zielińska', '1992-08-05', 'karolina@example.com', '321456987', 0x7a646a656369655f6b61726f6c696e612e6a7067, 'Wrocław'),
-(7, 'Łukasz', 'Szymański', '1991-01-22', 'lukasz@example.com', '159263487', 0x7a646a656369655f6c756b61737a2e6a7067, 'Szczecin'),
-(8, 'Natalia', 'Jaworska', '1994-06-18', 'natalia@example.com', '456987123', 0x7a646a656369655f6e6174616c69612e6a7067, 'Katowice'),
-(9, 'Michał', 'Kaczmarek', '1998-09-28', 'michal@example.com', '987654321', 0x7a646a656369655f6d696368616c2e6a7067, 'Gdynia'),
-(10, 'Ewa', 'Witkowska', '1997-04-12', 'ewa@example.com', '654789321', 0x7a646a656369655f6577612e6a7067, 'Bydgoszcz');
+INSERT INTO `uzytkownik` (`id`, `imie`, `nazwisko`, `data_urodzenia`, `numer_telefonu`, `zdjecie_profilowe`, `miejsce_zamieszkania`) VALUES
+(1, 'Jan', 'Kowalski', '1990-05-15', '123456789', 'https://marcinbiodrowski.com/wp-content/uploads/2018/03/dlaczego-warto-miec-dobre-zdjecie-w-CV.jpg', 'Warszawa'),
+(2, 'Anna', 'Nowak', '1988-12-10', '987654321', 'zdjecie_anna.jpg', 'Kraków'),
+(3, 'Piotr', 'Lewandowski', '1995-07-20', '456123789', 'zdjecie_piotr.jpg', 'Gdańsk'),
+(4, 'Magda', 'Wójcik', '1993-03-25', '789654321', 'zdjecie_magda.jpg', 'Poznań'),
+(5, 'Marek', 'Dąbrowski', '1987-10-30', '654789321', 'zdjecie_marek.jpg', 'Łódź'),
+(6, 'Karolina', 'Zielińska', '1992-08-05', '321456987', 'zdjecie_karolina.jpg', 'Wrocław'),
+(7, 'Łukasz', 'Szymański', '1991-01-22', '159263487', 'zdjecie_lukasz.jpg', 'Szczecin'),
+(8, 'Natalia', 'Jaworska', '1994-06-18', '456987123', 'zdjecie_natalia.jpg', 'Katowice'),
+(9, 'Michał', 'Kaczmarek', '1998-09-28', '987654321', 'zdjecie_michal.jpg', 'Gdynia'),
+(10, 'Ewa', 'Witkowska', '1997-04-12', '654789321', 'zdjecie_ewa.jpg', 'Bydgoszcz');
 
 -- --------------------------------------------------------
 
@@ -395,8 +394,7 @@ ALTER TABLE `umiejetnosc`
 -- Indeksy dla tabeli `uzytkownik`
 --
 ALTER TABLE `uzytkownik`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `adres_email` (`adres_email`);
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indeksy dla tabeli `wyksztalcenie`

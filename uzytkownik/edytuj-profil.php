@@ -38,13 +38,7 @@ if (isset($_SESSION['id'])) {
 }
 //zapisywanie do bazy
 if(isset($_POST['email'])){
-    $sql = "UPDATE ";
-    if ($conn->query($sql) === TRUE) {
-        echo "Record updated successfully";
-      } else {
-        echo "Error updating record: " . $conn->error;
-      }
-      echo 'test';
+    $query = "UPDATE `konto` SET `email`=$_POST[email] WHERE id=$userId";
 }
 
 $conn->close();
