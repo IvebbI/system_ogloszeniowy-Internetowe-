@@ -45,7 +45,6 @@
                     Mój profil
                   </a>
                 </li>
-           
                 html;
               }
           ?>

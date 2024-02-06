@@ -147,8 +147,9 @@ $conn->close();
               <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                     <div class="mb-3">
-                      <img src="https://hubertkajdan.com/wp-content/uploads/2019/06/2019-06-20-Jezioro-Lednickie-010-Pano-1024x663.jpg" height="200px">
-                      <input type="file" class="form-control mt-3" id="imgsrc" aria-describedby="emailHelp">
+                      <img src="<?php echo isset($userData['zdjecie_profilowe']) ? $userData['zdjecie_profilowe'] : '';?>" height="200px"><br>
+                      <label for="zdjecieprofilowe" class="form-label mt-1" >Zdjęcie profilowe (Link)</label>
+                      <input type="text" class="form-control mt-3" id="zdjecieprofilowe" aria-describedby="emailHelp" value="<?php echo isset($userData['zdjecie_profilowe']) ? $userData['zdjecie_profilowe'] : ''; ?>">
                       <label for="email1" class="form-label mt-1" >E-mail</label>
                       <input type="text" class="form-control mt-3" id="email1" aria-describedby="emailHelp" value="<?php echo isset($userData['email']) ? $userData['email'] : ''; ?>">
                       <label for="email1" class="form-label mt-1" >Link Github:</label>
@@ -177,17 +178,17 @@ $conn->close();
               <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   <label for="Stanowisko" class="form-label mt-1" >Stanowisko:</label>
-                  <input type="email" class="form-control mt-1" id="Stanowisko" aria-describedby="emailHelp">
+                  <input type="email" class="form-control mt-1" id="Stanowisko" aria-describedby="emailHelp" value="<?php echo isset($userData['stanowisko']) ? $userData['stanowisko'] : ''; ?>">
                   <label for="nfirmy" class="form-label mt-3">nazwa firmy:</label>
-                  <input type="text" class="form-control mt-1" id="nfirmy" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="nfirmy" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_firmy']) ? $userData['nazwa_firmy'] : ''; ?>">
                   <label for="lokalizacja" class="form-label mt-3">lokalizacja:</label>
-                  <input type="text" class="form-control mt-1" id="lokalizacja" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="lokalizacja" aria-describedby="emailHelp" value="<?php echo isset($userData['lokalizacja']) ? $userData['lokalizacja'] : ''; ?>">
                   <label for="zatrudnienieod" class="form-label mt-3">Zatrudnienie od:</label>
-                  <input type="date" class="form-control mt-1" id="zatrudnienieod" aria-describedby="emailHelp">
+                  <input type="date" class="form-control mt-1" id="zatrudnienieod" aria-describedby="emailHelp" value="<?php echo isset($userData['okres_zatrudnienia_od']) ? $userData['okres_zatrudnienia_od'] : ''; ?>">
                   <label for="zatrudnieniedo" class="form-label mt-3">Zatrudnienie do:</label>
-                  <input type="date" class="form-control mt-1" id="zatrudnieniedo" aria-describedby="emailHelp">
+                  <input type="date" class="form-control mt-1" id="zatrudnieniedo" aria-describedby="emailHelp" value="<?php echo isset($userData['okres_zatrudnienia_do']) ? $userData['okres_zatrudnienia_do'] : ''; ?>">
                   <label for="Obowiazki" class="form-label mt-3">Obowiazki:</label>
-                  <input type="text" class="form-control mt-1" id="Obowiazki" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="Obowiazki" aria-describedby="emailHelp" value="<?php echo isset($userData['obowiazki']) ? $userData['obowiazki'] : ''; ?>">
                 <button type="submit" class="btn btn-primary mt-3">Zapisz</button>
           
               </div>
@@ -201,11 +202,11 @@ $conn->close();
               <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
                   <label for="nazwaszkolenia" class="form-label mt-1" >Nazwa szkolenia:</label>
-                  <input type="text" class="form-control mt-1" id="nazwaszkolenia" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="nazwaszkolenia" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_szkolenia']) ? $userData['nazwa_szkolenia'] : ''; ?>">
                   <label for="organizator" class="form-label mt-1" >Organizator:</label>
-                  <input type="text" class="form-control mt-1" id="organizator" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="organizator" aria-describedby="emailHelp" value="<?php echo isset($userData['organizator']) ? $userData['organizator'] : ''; ?>">
                   <label for="Datas" class="form-label mt-1" >Data:</label>
-                  <input type="date" class="form-control mt-1" id="Datas" aria-describedby="emailHelp">
+                  <input type="date" class="form-control mt-1" id="Datas" aria-describedby="emailHelp" value="<?php echo isset($userData['data']) ? $userData['data'] : ''; ?>">
                   <button type="submit" class="btn btn-primary mt-3">Zapisz</button>
                 </div>
               </div>
@@ -219,13 +220,19 @@ $conn->close();
               <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
                 <div class="accordion-body">
                   <label for="umiejetnosci" class="form-label mt-1" >Umiejętności:</label>
-                  <input type="text" class="form-control mt-1" id="umiejetnosci" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="umiejetnosci" aria-describedby="emailHelp" value="<?php echo isset($userData['obowiazki']) ? $userData['obowiazki'] : ''; ?>">
                   <label for="nazwaszkoly" class="form-label mt-1" >Nazwa szkoły:</label>
-                  <input type="text" class="form-control mt-1" id="nazwaszkoly" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="nazwaszkoly" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_szkoly']) ? $userData['nazwa_szkoly'] : ''; ?>">
                   <label for="miejscowosc" class="form-label mt-1" >Miejscowość:</label>
-                  <input type="text" class="form-control mt-1" id="miejscowosc" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="miejscowosc" aria-describedby="emailHelp" value="<?php echo isset($userData['miejscowosc']) ? $userData['miejscowosc'] : ''; ?>">
                   <label for="poziomw" class="form-label mt-1" >Poziom Wykształcenia:</label>
-                  <input type="text" class="form-control mt-1" id="poziomw" aria-describedby="emailHelp">
+                  <input type="text" class="form-control mt-1" id="poziomw" aria-describedby="emailHelp" value="<?php echo isset($userData['poziom_wyksztalcenia']) ? $userData['poziom_wyksztalcenia'] : ''; ?>">
+                  <label for="kierunek" class="form-label mt-1" >Kierunek:</label>
+                  <input type="text" class="form-control mt-1" id="kierunek" aria-describedby="emailHelp" value="<?php echo isset($userData['kierunek']) ? $userData['kierunek'] : ''; ?>">
+                  <label for="uczeszczalod" class="form-label mt-1" >Uczęszczał od:</label>
+                  <input type="text" class="form-control mt-1" id="uczeszczalod" aria-describedby="emailHelp" value="<?php echo isset($userData['okres_od']) ? $userData['okres_od'] : ''; ?>">
+                  <label for="uczeszczaldo" class="form-label mt-1" >Uczęszczał do:</label>
+                  <input type="text" class="form-control mt-1" id="uczeszczaldo" aria-describedby="emailHelp" value="<?php echo isset($userData['okres_do']) ? $userData['okres_do'] : ''; ?>">
                   <button type="submit" class="btn btn-primary mt-3">Zapisz</button>
                 </div>
               </div>
