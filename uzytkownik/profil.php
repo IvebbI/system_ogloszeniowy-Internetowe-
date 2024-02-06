@@ -96,7 +96,7 @@ $conn->close();
         html;
                   }
         
-                  if($_SESSION['czyadmin']=='TAK'){
+                  if(isset($_SESSION['czyadmin']) && $_SESSION['czyadmin']=='TAK'){
                     echo <<<html
                     <li class="nav-item">
                     <a href="../adminpanel/admin-panel.php" class="nav-link custom-link me-2">
@@ -135,20 +135,37 @@ $conn->close();
         <div class="defaults">
           <h1>Mój Profil</h1>
           <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
-
+          <?php
+    $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
+    $sql = "SELECT id, name, image FROM `images` WHERE id=$_SESSION[id]";
+    $result = mysqli_query($conn, $sql);
+     
+    while ($row = mysqli_fetch_object($result))
+    {
+      echo "<img src='data:image;base64,".base64_encode($row->image)."'>";
+ } ?>
+                     <form method="POST" action="upload.php" enctype="multipart/form-data">
+                          <p>
+                              <label>Zmień zdjęcie</label><br>
+                              <input type="file" name="image" accept="image/*" required />
+                          </p>
+                          <button type="submit" class="btn btn-primary mt-3" name="zapisz2" >Zapisz</button><br><br>
+                      </form><br>
           <div class="accordion" id="accordionExample">
             <div class="accordion-item">
               <h2 class="accordion-header">
                 <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                   Podstawowe Informacje
                 </button>
+                
               </h2>
+              
               <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
                 <div class="accordion-body">
-                <form action="edytuj-profil.php" method="POST">
+           
                     <div class="mb-3">
-             
-                      <img src="<?php echo isset($userData['zdjecie_profilowe']) ? $userData['zdjecie_profilowe'] : ''; ?>" height="200px"><br><br>
+      
+                      <form action="edytuj-profil.php" method="POST">
                       <label for="zdjecieprofilowe" class="form-label mt-1" >Zdjęcie profilowe (Link)</label>
                       <input type="text" name="zdjecieprofilowe" class="form-control mt-3" id="zdjecieprofilowe" aria-describedby="emailHelp" value="<?php echo isset($userData['zdjecie_profilowe']) ? $userData['zdjecie_profilowe'] : ''; ?>">
                       <label for="email1" class="form-label mt-1" >E-mail</label>

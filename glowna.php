@@ -69,7 +69,7 @@
         html;
       }
       
-      if($_SESSION['czyadmin']=='TAK'){
+      if(isset($_SESSION['czyadmin']) && $_SESSION['czyadmin']=='TAK'){
         echo <<<html
         <li class="nav-item">
         <a href="adminpanel/admin-panel.php" class="nav-link custom-link me-2">
