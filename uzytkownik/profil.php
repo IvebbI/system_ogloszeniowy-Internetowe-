@@ -5,6 +5,9 @@ session_start();
 
 
 include '../logowanie/config.php';
+if(!isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])){
+  header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
+}
 
 if (isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
@@ -137,12 +140,12 @@ $conn->close();
           <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
           <?php
     $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
-    $sql = "SELECT id, name, image FROM `images` WHERE id=$_SESSION[id]";
+    $sql = "SELECT id_uzytkownika, name, image FROM `images` WHERE id_uzytkownika=$_SESSION[id]";
     $result = mysqli_query($conn, $sql);
      
     while ($row = mysqli_fetch_object($result))
     {
-      echo "<img src='data:image;base64,".base64_encode($row->image)."'>";
+      echo "<img src='data:image;base64,".base64_encode($row->image)."' height='300px'>";
  } ?>
                      <form method="POST" action="upload.php" enctype="multipart/form-data">
                           <p>
@@ -166,8 +169,6 @@ $conn->close();
                     <div class="mb-3">
       
                       <form action="edytuj-profil.php" method="POST">
-                      <label for="zdjecieprofilowe" class="form-label mt-1" >Zdjęcie profilowe (Link)</label>
-                      <input type="text" name="zdjecieprofilowe" class="form-control mt-3" id="zdjecieprofilowe" aria-describedby="emailHelp" value="<?php echo isset($userData['zdjecie_profilowe']) ? $userData['zdjecie_profilowe'] : ''; ?>">
                       <label for="email1" class="form-label mt-1" >E-mail</label>
                       <input type="text" name="email" class="form-control mt-3" id="email1" aria-describedby="emailHelp" value="<?php echo isset($userData['email']) ? $userData['email'] : ''; ?>">
                       <label for="link" class="form-label mt-1" >Link Github:</label>
@@ -230,6 +231,10 @@ $conn->close();
                   <input type="text" name="organizator" class="form-control mt-1" id="organizator" aria-describedby="emailHelp" value="<?php echo isset($userData['organizator']) ? $userData['organizator'] : ''; ?>">
                   <label for="Datas" class="form-label mt-1" >Data:</label>
                   <input type="date" name="data" class="form-control mt-1" id="Datas" aria-describedby="emailHelp" value="<?php echo isset($userData['data']) ? $userData['data'] : ''; ?>">
+                  <label for="nazwajezyka" class="form-label mt-1" >Język:</label>
+                  <input type="text" name="nazwajezyka" class="form-control mt-1" id="organizator" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_jezyka']) ? $userData['nazwa_jezyka'] : ''; ?>">
+                  <label for="poziomjezyka" class="form-label mt-1" >Poziom języka:</label>
+                  <input type="text" name="poziomjezyka" class="form-control mt-1" id="organizator" aria-describedby="emailHelp" value="<?php echo isset($userData['poziom']) ? $userData['poziom'] : ''; ?>">
                   <button type="submit" class="btn btn-primary float-end mt-3" name="zapisz3">Zapisz</button><br><br>
                 </div>
               </div>
@@ -245,7 +250,7 @@ $conn->close();
                 <div class="accordion-body">
                 <form action="edytuj-profil.php" method="POST">
                   <label for="umiejetnosci" class="form-label mt-1" >Umiejętności:</label>
-                  <input type="text" name="umiejetnosci" class="form-control mt-1" id="umiejetnosci" aria-describedby="emailHelp" value="<?php echo isset($userData['obowiazki']) ? $userData['obowiazki'] : ''; ?>">
+                  <input type="text" name="umiejetnosci" class="form-control mt-1" id="umiejetnosci" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_umiejetnosci']) ? $userData['nazwa_umiejetnosci'] : ''; ?>">
                   <label for="nazwaszkoly" class="form-label mt-1" >Nazwa szkoły:</label>
                   <input type="text" name="nazwaszkoly" class="form-control mt-1" id="nazwaszkoly" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_szkoly']) ? $userData['nazwa_szkoly'] : ''; ?>">
                   <label for="miejscowosc" class="form-label mt-1" >Miejscowość:</label>
