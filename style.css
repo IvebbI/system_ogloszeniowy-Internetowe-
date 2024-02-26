@@ -20,6 +20,14 @@
     text-decoration: underline  #007bff ; 
     
 }
+.zarejestruj-btn{
+  background-color: 	#6A5ACD;
+  color:white;
+}
+.login-btn{
+  background-color: white;
+  color:#6A5ACD;
+}
 .card-title{
   color: #00008B;
 }

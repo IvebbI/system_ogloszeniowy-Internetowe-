@@ -81,6 +81,11 @@
             Zaloguj się
         </a>
     html;
+    echo <<<html
+    <a href="/system_ogloszeniowy-Internetowe-/logowanie/register_form.php" class="zarejestruj-btn nav-link custom-link me-2">
+        Zarejestruj się
+    </a>
+  html;
   }
   if(isset($_SESSION['id'])){
 
