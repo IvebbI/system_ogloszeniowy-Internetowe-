@@ -2,17 +2,18 @@
 @include 'config.php';
 
 session_start();
+//var_dump($_SESSION['registration_data']);
 
 if (isset($_POST['submit'])) {
-    $email = mysqli_real_escape_string($conn, $_POST['usermail']);
-    $kodWeryfikacyjny = $_POST['verification_code'];
+    $email = mysqli_real_escape_string($conn, $_SESSION['registration_data']['usermail']);
+    $kodWeryfikacyjny = mysqli_real_escape_string($conn, $_SESSION['registration_data']['verification_code']);
 
 
 
     if (!isset($error)) {
-        $select = "SELECT * FROM konto WHERE email = '$email' AND kod_weryfikacyjny = '$kodWeryfikacyjny'";
+        $select = "SELECT * FROM konto WHERE email = '$email' ";
         $result = mysqli_query($conn, $select);
-
+        
         if ($result) {
             $userData = mysqli_fetch_assoc($result);
 
@@ -27,7 +28,7 @@ if (isset($_POST['submit'])) {
                 if ($result_insert) {
                     $_SESSION['id'] =  $userData['id'];
                     $_SESSION['czyfirma'] = $firma; 
-                    $_SESSION['czyadmin'] = $admin; 
+                    $_SESSION['czyadmin'] = $admin;
 
                     header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
                     exit;
