@@ -17,7 +17,7 @@
   />
   <link rel="stylesheet" href="style.css" />
 </head>
-<body >
+<body>
 
   <nav class="navbar navbar-expand-md navbar-light bg-light">
     <a href="glowna.php" class="navbar-brand mx-3">
@@ -122,78 +122,90 @@ html;
       
     </div>
   </nav>
+  <section id="home" class="welcome-hero">
+			<div class="container">
+				<div class="welcome-hero-txt">
+					<h2>Najlepsze miejsce do wyszukania <br> wszystkiego co potrzebujesz </h2>
+					<p>
+						Znajdź najlepszą pracę na naszej stronie klikając oraz przeglądając odpowiednie karty
+					</p>
+				</div>
+				
+					<div class="welcome-hero-serch">
+						<button class="welcome-hero-btn">
+							 Przejrzyj oferty  <i data-feather="search"></i> 
+						</button>
+					</div>
+				</div>
+			</div>
+
+		</section>
+   
+
+
+    <section id="works" class="works" style="margin-top:100px">
+			<div class="container">
+				<div class="section-header">
+					<h2>Jak to działa?</h2>
+					<p>Dowiedz się wiecej na temat naszych ofert pracy</p>
+				</div>
+				<div class="works-content">
+					<div class="row">
+						<div class="col-md-4 col-sm-6">
+							<div class="single-how-works">
+								<div class="single-how-works-icon">
+									<i class="flaticon-lightbulb-idea"><img src="/images/banner1.jpg"></i>
+								</div>
+								<h2><a href="#">Wybierz<span> prace jaką</span> chcesz</a></h2>
+								<p>
+									Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt ut laboremagna aliqua. 
+								</p>
+								<button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">
+									czytaj więcej
+								</button>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="single-how-works">
+								<div class="single-how-works-icon">
+									<i class="flaticon-networking"></i>
+								</div>
+								<h2><a href="#">znajdź <span> pracę jaką potrzebujesz</span></a></h2>
+								<p>
+									Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt ut laboremagna aliqua. 
+								</p>
+								<button class="welcome-hero-btn how-work-btn">
+								czytaj więcej
+								</button>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="single-how-works">
+								<div class="single-how-works-icon">
+									<i class="flaticon-location-on-road"></i>
+								</div>
+								<h2><a href="#">szukaj <span> ekstra</span> ofert pracy</a></h2>
+								<p>
+									Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt ut laboremagna aliqua. 
+								</p>
+								<button class="welcome-hero-btn how-work-btn" onclick="window.location.href='#'">
+								czytaj więcej
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		</section>
+
+
+								
+				
   <div class="container">
 
-<div id="carouselExampleControls" class="carousel slide w-100 p-3" data-bs-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img src="https://hubertkajdan.com/wp-content/uploads/2019/06/2019-06-20-Jezioro-Lednickie-010-Pano-1024x663.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://waskiel.pl/wp-content/uploads/2019/11/pomysly-na-zdjecia-obraz-wyrozniajacy.jpg" class="d-block w-100" alt="...">
-    </div>
-    <div class="carousel-item">
-      <img src="https://waskiel.pl/wp-content/uploads/2017/09/jak-zrobic-dobre-zdjecie-ustawienia-aparatu.jpg" class="d-block w-100" alt="...">
-    </div>
-  </div>
-  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Previous</span>
-  </button>
-  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-    <span class="visually-hidden">Next</span>
-  </button>
-</div>
 
-<!-- card -->
-<div class="row row-cols-1 row-cols-md-2 g-4">
-  <div class="col">
-    <div class="card">
-      <img src="https://media.istockphoto.com/id/1295364225/pl/wektor/czas-zaktualizowa%C4%87-niebiesk%C4%85-etykiet%C4%99-na-bia%C5%82ym-tle-niebieski-baner-ilustracja-wektorowa.jpg?s=612x612&w=0&k=20&c=akoh1EZDKoYszOt8oFW3YBxogElOTDog9Hn1v5RdXnI=" class="card-img-top w-50" alt="Hollywood Sign on The Hill"/>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in to
-          additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://media.istockphoto.com/id/1295364225/pl/wektor/czas-zaktualizowa%C4%87-niebiesk%C4%85-etykiet%C4%99-na-bia%C5%82ym-tle-niebieski-baner-ilustracja-wektorowa.jpg?s=612x612&w=0&k=20&c=akoh1EZDKoYszOt8oFW3YBxogElOTDog9Hn1v5RdXnI=" class="card-img-top w-50" alt="Palm Springs Road"/>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in to
-          additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://media.istockphoto.com/id/1295364225/pl/wektor/czas-zaktualizowa%C4%87-niebiesk%C4%85-etykiet%C4%99-na-bia%C5%82ym-tle-niebieski-baner-ilustracja-wektorowa.jpg?s=612x612&w=0&k=20&c=akoh1EZDKoYszOt8oFW3YBxogElOTDog9Hn1v5RdXnI=" class="card-img-top w-50" alt="Los Angeles Skyscrapers"/>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content.</p>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="card">
-      <img src="https://media.istockphoto.com/id/1295364225/pl/wektor/czas-zaktualizowa%C4%87-niebiesk%C4%85-etykiet%C4%99-na-bia%C5%82ym-tle-niebieski-baner-ilustracja-wektorowa.jpg?s=612x612&w=0&k=20&c=akoh1EZDKoYszOt8oFW3YBxogElOTDog9Hn1v5RdXnI=" class="card-img-top w-50" alt="Skyscrapers"/>
-      <div class="card-body">
-        <h5 class="card-title">Card title</h5>
-        <p class="card-text">
-          This is a longer card with supporting text below as a natural lead-in to
-          additional content. This content is a little bit longer.
-        </p>
-      </div>
-    </div>
-  </div>
-</div>
+
   </div>  
 
 
