@@ -140,7 +140,7 @@ $conn->close();
           <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
           <?php
     $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
-    $sql = "SELECT id_uzytkownika, name, image FROM `images` WHERE id_uzytkownika=$_SESSION[id]";
+    $sql = "SELECT id, name, image FROM `images` WHERE id=$_SESSION[id]";
     $result = mysqli_query($conn, $sql);
      
     while ($row = mysqli_fetch_object($result))

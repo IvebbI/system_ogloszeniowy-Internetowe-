@@ -98,12 +98,12 @@
   <?php
 if (!isset($_SESSION['id'])) {
   echo <<<html
-      <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
+      <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="login-btn me-2">
           Zaloguj się
       </a>
   html;
   echo <<<html
-  <a href="/system_ogloszeniowy-Internetowe-/logowanie/register_form.php" class="zarejestruj-btn nav-link custom-link me-2">
+  <a href="/system_ogloszeniowy-Internetowe-/logowanie/register_form.php" class="zarejestruj-btn register-btn me-2">
       Zarejestruj się
   </a>
 html;
@@ -153,9 +153,9 @@ html;
 					<div class="row">
 						<div class="col-md-4 col-sm-6">
 							<div class="single-how-works">
-								<div class="single-how-works-icon">
-									<i class="flaticon-lightbulb-idea"><img src="/images/banner1.jpg"></i>
-								</div>
+
+								<img src="images/loupe_751463.png" style="height: 100px">
+
 								<h2><a href="#">Wybierz<span> prace jaką</span> chcesz</a></h2>
 								<p>
 									Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt ut laboremagna aliqua. 
@@ -167,9 +167,7 @@ html;
 						</div>
 						<div class="col-md-4 col-sm-6">
 							<div class="single-how-works">
-								<div class="single-how-works-icon">
-									<i class="flaticon-networking"></i>
-								</div>
+              <img src="images/man_816730.png" style="height: 100px">
 								<h2><a href="#">znajdź <span> pracę jaką potrzebujesz</span></a></h2>
 								<p>
 									Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt ut laboremagna aliqua. 
@@ -181,9 +179,7 @@ html;
 						</div>
 						<div class="col-md-4 col-sm-6">
 							<div class="single-how-works">
-								<div class="single-how-works-icon">
-									<i class="flaticon-location-on-road"></i>
-								</div>
+              <img src="images/select_6448937.png" style="height: 100px">
 								<h2><a href="#">szukaj <span> ekstra</span> ofert pracy</a></h2>
 								<p>
 									Lorem ipsum dolor sit amet, consecte adipisicing elit, sed do eiusmod tempor incididunt ut laboremagna aliqua. 
@@ -202,11 +198,77 @@ html;
 
 								
 				
-  <div class="container">
+
+    <section id="ofertypracymain" class="works">
+    <div class="container">
+    <div class="section-header">
+  <h2>Szukasz czegoś więcej?</h2>
+  <p>Przeglądnij nasze najpopularniejsze oferty!</p>
+  <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "baza_systemogloszeniowy";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT ogloszenie.*, firma.* FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id";
+$result = $conn->query($sql);
+
+$counter = 0;
+
+if ($result->num_rows > 0) {
+  ?>
+  <div class="card-columns d-flex flex-wrap">
+    <?php
+    while ($row = $result->fetch_assoc()) {
+      if ($counter < 4) {
+        ?>
+        <div class="card" style="width: 18rem;">
+          <?php
+          if (isset($row['logo_url']) && !empty($row['logo_url'])) {
+            ?>
+            <img class="card-img-top" src="<?php echo $row['logo_url']; ?>" alt="Card image cap">
+          <?php
+          }
+          ?>
+          <div class="card-body">
+            <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
+            <p class="card-text">
+              <?php echo $row['widelki_wynagrodzenia']; ?>
+            </p>
+            <p class="card-text">
+              <?php echo $row['nazwa_firmy']; ?><br>
+              <?php echo $row['adres']; ?>
+            </p>
+            <button class="welcome-hero-btn how-work-btn">
+								czytaj więcej
+								</button>
+          </div>
+        </div>
+        <?php
+        $counter++;
+      }
+    }
+    ?>
+  </div>
+  <?php
+} else {
+  echo "Brak wyników";
+}
+$conn->close();
+?>
 
 
 
-  </div>  
+
+</section>
+
+
 
 
 
