@@ -56,14 +56,23 @@
       <?php
 
       
-
+if(isset($_SESSION['czyadmin']) && $_SESSION['czyfirma']=='TAK'){
+  echo <<<html
+<li class="nav-item">
+<a href="firma/dodaj_ogloszenie.php" class="nav-link custom-link me-2">
+  Dodaj ogłoszenie
+  <img class="d-inline-block align-top" src="images/icon_add.png" style="height: 20px;" />
+</a>
+</li>
+html;
+}
           if(isset($_SESSION['czyadmin'])  && $_SESSION['czyfirma']=='TAK'){
 
             echo <<<html
         <li class="nav-item">
-          <a href="praca/ogloszenie_dodaj.php" class="nav-link custom-link me-2">
-            Dodaj ogłoszenie
-            <img class="d-inline-block align-top" src="images/icon_add.png" style="height: 30px;" />
+          <a href="firma/firma-panel.php" class="nav-link custom-link me-2">
+            Panel Firmy
+            <img class="d-inline-block align-top" src="images/company.png" style="height: 20px;" />
           </a>
         </li>
         html;
@@ -74,7 +83,7 @@
         <li class="nav-item">
         <a href="adminpanel/admin-panel.php" class="nav-link custom-link me-2">
           Panel Admin
-          <img class="d-inline-block align-top" src="images/adminpanelzdj.png" style="height: 30px;" />
+          <img class="d-inline-block align-top" src="images/adminpanelzdj.png" style="height: 20px;" />
         </a>
       </li>
     html;

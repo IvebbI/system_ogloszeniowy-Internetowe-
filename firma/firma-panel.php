@@ -33,7 +33,7 @@
           </a>
         </li>
         <li class="nav-item custom-link1">
-          <a href="" class="nav-link  active">
+          <a href="../praca/oferty_pracy.php" class="nav-link  ">
             Oferty pracy
           </a>
         </li>
@@ -41,7 +41,7 @@
               if(isset($_SESSION['id'])){
                 echo <<<html
                 <li class="nav-item custom-link1">
-                  <a href="../uzytkownik/profil.php" class="nav-link">
+                  <a href="../uzytkownik/profil.php" class="nav-link ">
                     Mój profil
                   </a>
                 </li>
@@ -54,20 +54,20 @@
       <ul class="navbar-nav ms-auto">
 
       <?php
-if(isset($_SESSION['czyadmin']) && $_SESSION['czyfirma']=='TAK'){
-  echo <<<html
-<li class="nav-item">
-<a href="../firma/dodaj_ogloszenie.php" class="nav-link custom-link me-2">
-  Dodaj ogłoszenie
-  <img class="d-inline-block align-top" src="../images/icon_add.png" style="height: 20px;" />
-</a>
-</li>
-html;
-}
+      if(isset($_SESSION['czyadmin']) && $_SESSION['czyfirma']=='TAK'){
+        echo <<<html
+    <li class="nav-item">
+      <a href="dodaj_ogloszenie.php" class="nav-link custom-link me-2 ">
+        Dodaj ogłoszenie
+        <img class="d-inline-block align-top" src="../images/icon_add.png" style="height: 20px;" />
+      </a>
+    </li>
+    html;
+  }
           if(isset($_SESSION['czyadmin']) && $_SESSION['czyfirma']=='TAK'){
             echo <<<html
         <li class="nav-item">
-          <a href="../firma/firma-panel.php" class="nav-link custom-link me-2">
+          <a href="" class="nav-link custom-link me-2  active">
             Panel Firmy
             <img class="d-inline-block align-top" src="../images/company.png" style="height: 20px;" />
           </a>
@@ -77,9 +77,9 @@ html;
       if(isset($_SESSION['czyadmin']) && $_SESSION['czyadmin']=='TAK'){
         echo <<<html
         <li class="nav-item">
-        <a href="../adminpanel/admin-panel.php" class="nav-link custom-link me-2">
+        <a href="../adminpanel/admin-panel.php" class="nav-link custom-link me-2 ">
           Panel Admin
-          <img class="d-inline-block align-top" src="../images/adminpanelzdj.png" style="height: 20px;" />
+          <img class="d-inline-block align-top" src="../images/adminpanelzdj.png" style="height: 30px;" />
         </a>
       </li>
     html;
@@ -114,81 +114,15 @@ html;
     </div>
   </nav>
  
-
-    <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "baza_systemogloszeniowy";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT ogloszenie.*, firma.* FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $counter = 0; 
-?>
-    <div class="container">
-        <div class="row">
-<?php
-    while ($row = $result->fetch_assoc()) {
-        if ($counter > 0 && $counter % 3 === 0) {
-          
-?>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-<?php
-        }
-?>
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
-                        <p class="offerts-cost">
-                            <?php echo $row['widelki_wynagrodzenia']; ?>
-                        </p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-5 col-sm-4">
-                                    <img src="<?php echo $row['logo_url']; ?>" class="image-offerts img-fluid">
-                                </div>
-                                <div class="col-7 col-sm-8">
-                                    <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?></span>
-                                    <p class="adress-offerts">
-                                        <?php echo $row['adres']; ?>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footer">
-                        <a href="#" class="aplicate-offets">Sprawdź ofertę</a>
-                    </div>
-                </div>
-            </div>
-<?php
-        $counter++;
-    }
-?>
-        </div>
-    </div>
-<?php
-} else {
-    echo "Brak wyników";
-}
-$conn->close();
-?>
-
-
-
-
+  <section id="works" class="works" style="margin-top:100px">
+			<div class="container">
+				<div class="section-header">
+					<h2>Witaj w panelu firmy</h2>
+					<p>Na tej stronie masz dostęp do wszystkich ważnych zarządzaniach stroną!</p>
+                    <p>Uważaj na elementy zachowane na stronie ponieważ w łatwy sposób możesz usunąć ważne rzeczy</p>
+		
+		
+		</section>
 
 
 

@@ -80,7 +80,7 @@ $conn->close();
           </a>
         </li>
         <li class="nav-item custom-link1">
-          <a href="../uzytkownik/profil.php" class="nav-link ">
+          <a href="../uzytkownik/profil.php" class="nav-link active">
             Mój profil
           </a>
         </li>
@@ -88,12 +88,22 @@ $conn->close();
       <ul class="navbar-nav ms-auto">
 
         <?php 
+        if(isset($_SESSION['czyadmin']) && $_SESSION['czyfirma']=='TAK'){
+          echo <<<html
+        <li class="nav-item">
+        <a href="../firma/dodaj_ogloszenie.php" class="nav-link custom-link me-2">
+          Dodaj ogłoszenie
+          <img class="d-inline-block align-top" src="../images/icon_add.png" style="height: 20px;" />
+        </a>
+        </li>
+        html;
+        }
                   if(isset($_SESSION['czyfirma']) && $_SESSION['czyfirma']=='TAK'){
                     echo <<<html
         <li class="nav-item">
-          <a href="../praca/ogloszenie_dodaj.php" class="nav-link custom-link me-2">
-            Dodaj ogłoszenie
-            <img class="d-inline-block align-top" src="../images/icon_add.png" style="height: 30px;" />
+          <a href="../firma/firma-panel.php" class="nav-link custom-link me-2">
+           Panel Firmy
+            <img class="d-inline-block align-top" src="../images/company.png" style="height: 20px;" />
           </a>
         </li>
         html;
@@ -104,7 +114,7 @@ $conn->close();
                     <li class="nav-item">
                     <a href="../adminpanel/admin-panel.php" class="nav-link custom-link me-2">
                       Panel Admin
-                      <img class="d-inline-block align-top" src="../images/adminpanelzdj.png" style="height: 30px;" />
+                      <img class="d-inline-block align-top" src="../images/adminpanelzdj.png" style="height: 20px;" />
                     </a>
                   </li>
                 html;
@@ -139,6 +149,12 @@ $conn->close();
           <h1>Mój Profil</h1>
           <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
           <?php
+          echo "<pre>";
+          print_r($_SESSION);
+          echo "</pre>";
+              
+       
+                 
     $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
     $sql = "SELECT id, name, image FROM `images` WHERE id=$_SESSION[id]";
     $result = mysqli_query($conn, $sql);
@@ -280,6 +296,7 @@ $conn->close();
     </div>
   </div>
   </div>
+
 <br><br><br><br><br><br><br><br>
   <footer class="text-center text-lg-start bg-light text-muted">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"> 
