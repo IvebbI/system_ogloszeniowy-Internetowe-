@@ -199,12 +199,10 @@ html;
 								
 				
 
-    <section id="ofertypracymain" class="works">
-    <div class="container">
-    <div class="section-header">
-  <h2>Szukasz czegoś więcej?</h2>
-  <p>Przeglądnij nasze najpopularniejsze oferty!</p>
-  <?php
+<div class="container">
+
+</div>
+  <!-- <?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -232,7 +230,9 @@ if ($result->num_rows > 0) {
           <?php
           if (isset($row['logo_url']) && !empty($row['logo_url'])) {
             ?>
-            <img class="card-img-top" src="<?php echo $row['logo_url']; ?>" alt="Card image cap">
+                <div class="col-5 col-sm-4">
+                                    <img src="<?php echo $row['logo_url']; ?>" class="image-offerts img-fluid">
+                                </div>
           <?php
           }
           ?>
@@ -245,7 +245,7 @@ if ($result->num_rows > 0) {
               <?php echo $row['nazwa_firmy']; ?><br>
               <?php echo $row['adres']; ?>
             </p>
-            <button class="welcome-hero-btn how-work-btn">
+            <button class="szczegoly-ofert-glowna">
 								czytaj więcej
 								</button>
           </div>
@@ -256,12 +256,13 @@ if ($result->num_rows > 0) {
     }
     ?>
   </div>
+  </div>
   <?php
 } else {
   echo "Brak wyników";
 }
 $conn->close();
-?>
+?> -->
 
 
 

@@ -21,6 +21,19 @@
     text-decoration: underline  #007bff ; 
     
 }
+/*karta*/
+.card-title{
+
+}
+.szczegoly-ofert-glowna{
+background-color: white;
+color:#007bff;
+text-align: center;
+border: 0.1rem solid #007bff;
+padding: 6px;
+border-radius: 4px;
+}
+/*koniec karty*/
 .zarejestruj-btn{
   background-color: #007bff;
   color:white;
