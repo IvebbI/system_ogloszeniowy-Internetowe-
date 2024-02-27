@@ -33,6 +33,11 @@ border: 0.1rem solid #007bff;
 padding: 6px;
 border-radius: 4px;
 }
+.szczegoly-ofert-glowna:hover{
+  background-color: white;
+  color:#9932CC;
+  border: 1px solid #9932CC;
+}
 /*koniec karty*/
 .zarejestruj-btn{
   background-color: #007bff;
@@ -68,15 +73,27 @@ color:white;
   background-color: 	#6A5ACD;
   color:white;
 }
+.widelki-wynagrodzenia{
+  margin-left: 50px;
+  color:#9932CC;
+  
+}
 .login-btn{
   background-color: white;
   color:#6A5ACD;
 }
 .card-title{
-  color: #00008B;
+color: black;
+
+}
+.adres-firmy{
+  margin-top: -20px;
+  margin-left: 15px;
+  color:gray;
 }
 .card-text{
-  color:#1E90FF;
+  color:gray;
+  margin-top: 10px;
 }
 .image-offerts{
   width: 80px;
@@ -122,7 +139,7 @@ width: 100%;
 }
 
 .card-title {
-  color: #00008B;
+
   font-size: 1.2em; /* Dodany rozmiar czcionki */
   font-weight: bold; /* Pogrubienie tekstu */
   margin-bottom: 0.5em; /* Odstęp od pozostałej treści */

@@ -196,13 +196,16 @@ html;
 		</section>
 
 
-								
+
 				
 
 <div class="container">
+<div class="section-header">
+					<h2>Szukasz ofert pracy?</h2>
+					<p>Zobacz najpopularniejsze oferty pracy w tym miesiącu</p>
+				</div>
 
-</div>
-  <!-- <?php
+ <?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -227,23 +230,27 @@ if ($result->num_rows > 0) {
       if ($counter < 4) {
         ?>
         <div class="card" style="width: 18rem;">
-          <?php
-          if (isset($row['logo_url']) && !empty($row['logo_url'])) {
-            ?>
-                <div class="col-5 col-sm-4">
-                                    <img src="<?php echo $row['logo_url']; ?>" class="image-offerts img-fluid">
-                                </div>
-          <?php
-          }
-          ?>
+   
+
           <div class="card-body">
             <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
             <p class="card-text">
-              <?php echo $row['widelki_wynagrodzenia']; ?>
+
             </p>
-            <p class="card-text">
-              <?php echo $row['nazwa_firmy']; ?><br>
-              <?php echo $row['adres']; ?>
+            <?php
+          if (isset($row['logo_url']) && !empty($row['logo_url'])) {
+            ?>
+                        <div class="col-5 col-sm-3">
+                                    <img src="<?php echo $row['logo_url']; ?>" class="image-offerts img-fluid">
+                                </div>  
+          <?php
+          }
+          ?>
+
+            <span class="card-text">
+              <?php echo $row['nazwa_firmy']; ?>              <span class="widelki-wynagrodzenia"><?php echo $row['widelki_wynagrodzenia']; ?></span></div>
+              <div class="adres-firmy">
+              <?php echo $row['adres']; ?>  
             </p>
             <button class="szczegoly-ofert-glowna">
 								czytaj więcej
@@ -262,7 +269,7 @@ if ($result->num_rows > 0) {
   echo "Brak wyników";
 }
 $conn->close();
-?> -->
+?> 
 
 
 
