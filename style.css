@@ -23,7 +23,7 @@
 }
 /*karta*/
 .card-title{
-
+font-size: 12px;
 }
 .szczegoly-ofert-glowna{
 background-color: white;
@@ -140,7 +140,7 @@ width: 100%;
 
 .card-title {
 
-  font-size: 1.2em; /* Dodany rozmiar czcionki */
+  font-size: 14px; /* Dodany rozmiar czcionki */
   font-weight: bold; /* Pogrubienie tekstu */
   margin-bottom: 0.5em; /* Odstęp od pozostałej treści */
 }
@@ -153,13 +153,19 @@ width: 100%;
   width: 100%;
   height: auto; /* Zmieniony sposób skalowania */
 }
+.card:hover {
+  cursor: pointer;
+  background: linear-gradient(to left, #00FFFF 45%, #E0FFFF 80%);
+}
+
+
 
 .card {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* Cień */
   transition: 0.3s;
   border-radius: 5px; /* Zaokrąglenie rogów */
   margin: 15px; /* Odstęp między kartami */
-  width: 90%; /* Szerokość karty */
+  width: 100%; /* Szerokość karty */
   display: inline-block; /* Karty wyświetlane obok siebie */
   vertical-align: top; /* Ustawienie kart w linii */
 }
@@ -173,15 +179,31 @@ width: 100%;
   text-align: right;
   padding: 10px;
 }
+.offerts-iconsave{
+  text-align: right;
+  margin-top: -100px;
+}
+.offerts-jobet{
+  background-color: #00FFFF;
+  color:	#1E90FF;
+  font-size:13px;
+  padding: 3px;
 
+}
+.offerts-salary{
+  color:gray;
+  margin-left: 5px;
+  font-size: 12px;
+}
 #name-offerts {
-  color: #9932CC;
-  font-size: 1.1em; /* Dodany rozmiar czcionki */
+color:black;
+  font-size: 13px; /* Dodany rozmiar czcionki */
   font-weight: bold; /* Pogrubienie tekstu */
 }
 
 .adress-offerts {
-  color: #9932CC;
+color:gray;
+font-size:11px;
   margin-bottom: 0; /* Usunięty odstęp */
 }
 

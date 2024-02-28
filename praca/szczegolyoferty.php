@@ -113,84 +113,9 @@ html;
       </ul>
     </div>
   </nav>
+ 
 
-    <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "baza_systemogloszeniowy";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
-
-$sql = "SELECT ogloszenie.*, firma.* FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id";
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $counter = 0; 
-?>
-
-    <div class="container">
-        <div class="row">
-<?php
-    while ($row = $result->fetch_assoc()) {
-        if ($counter > 0 && $counter % 3 === 0) {
-          
-?>
-            </div>
-        </div>
-        <div class="container">
-            <div class="row">
-<?php
-        }
-?>
-            <div class="col-12 col-sm-6 col-lg-4">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
-                        <p class="offerts-cost">
-                          <span class="offerts-jobet">
-                          <?php echo $row['wymiar_etatu'];?></span>
-                          <span class="offerts-salary">Zarobki:
-                            <?php echo $row['widelki_wynagrodzenia']; ?></span>
-                        </p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-5 col-sm-4">
-                                    <img src="<?php echo $row['logo_url']; ?>" class="image-offerts img-fluid">
-                                </div>
-                                <div class="col-7 col-sm-8">
-                                    <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?>
-                                  </span>
-                                 
-                                    <p class="adress-offerts">
-                                      <img src="../images/lokalizacjaikona.png" style="height:15px">
-                                        <?php echo $row['adres']; ?>
-                                        <span class="offerts-iconsave">
-                                    <img src="../images/saveicon.png" style="height:20px; margin-left:180px; margin-top:-50px">
-                                  </span>
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-<?php
-        $counter++;
-    }
-?>
-        </div>
-    </div>
-<?php
-} else {
-    echo "Brak wyników";
-}
-$conn->close();
-?>
 
 
 
