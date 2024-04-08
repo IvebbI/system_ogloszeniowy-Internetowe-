@@ -151,7 +151,9 @@ if ($result->num_rows > 0) {
 <?php
         }
 ?>
+              
             <div class="col-12 col-sm-6 col-lg-4">
+            <a href="szczegolyoferty.php?id=<?php echo $row["id"]?>">
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
@@ -182,11 +184,16 @@ if ($result->num_rows > 0) {
                         </div>
                     </div>
                 </div>
+      </a>
             </div>
+      
+      
+      
 <?php
         $counter++;
     }
 ?>
+
         </div>
     </div>
 <?php

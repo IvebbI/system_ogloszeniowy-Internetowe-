@@ -140,18 +140,18 @@ $conn->close();
       </ul>
     </div>
   </nav>
+
 <div class="container">
+
+
 
   <div class="row">
     <div class="col">
       <div class="card">
         <div class="defaults">
-          <h1>Mój Profil</h1>
-          <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
+          <h1>Moja firma</h1>
+          <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji firmy</p>
           <?php
-          echo "<pre>";
-          print_r($_SESSION);
-          echo "</pre>";
               
        
                  
@@ -163,6 +163,125 @@ $conn->close();
     {
       echo "<img src='data:image;base64,".base64_encode($row->image)."' height='300px'>";
  } ?>
+
+                     <form method="POST" action="upload.php" enctype="multipart/form-data">
+                          <p>
+                              <label>Zmień zdjęcie firmy</label><br>
+                              <input type="file" name="image" accept="image/*" required />
+                          </p>
+                          <button type="submit" class="btn btn-primary mt-3" name="zapisz2" >Zapisz</button><br><br>
+                      </form><br>
+          <div class="accordion" id="accordionExample">
+            <div class="accordion-item">
+              <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                  Informacje firmy
+                </button>
+                
+              </h2>
+              
+              <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#accordionExample">
+                <div class="accordion-body">
+           
+                    <div class="mb-3">
+                      <?php
+include '../logowanie/config.php';
+if(!isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])){
+  header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
+}
+
+if (isset($_SESSION['id'])) {
+    $userId = $_SESSION['id'];
+
+    $query = "SELECT * FROM konto
+              LEFT JOIN firma ON konto.id=firma.konto_id
+
+              WHERE konto.id = $userId";
+
+
+    if (!$result = $conn->query($query)) {
+        echo "Błąd zapytania SQL: " . $conn->error;
+        exit();
+    }
+
+
+
+    if ($result->num_rows > 0) {
+        $userData = $result->fetch_assoc();
+
+
+    } else {
+        echo "Brak danych lub błąd zapytania.";
+    }
+} else {
+    echo "Brak sesji użytkownika.";
+}
+
+// Zamykanie połączenia z bazą danych po zakończeniu operacji
+$conn->close();
+                      ?>
+                      <form action="edytuj-profil.php" method="POST">
+                      <label for="email1" class="form-label mt-1" >E-mail</label>
+                      <input type="text" name="email" class="form-control mt-3" id="email1" aria-describedby="emailHelp" value="<?php echo isset($userData['email']) ? $userData['email'] : ''; ?>">
+                      <label for="nazwafirmyy" class="form-label mt-1" >Nazwa firmy</label>
+                      <input type="text" name="nazwafirmyy" class="form-control mt-1" id="link" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_firmy']) ? $userData['nazwa_firmy'] : ''; ?>">
+                      <label for="adres" class="form-label mt-3">Adres:</label>
+                      <input type="text" name="adres" class="form-control mt-1" id="text1" aria-describedby="emailHelp" value="<?php echo isset($userData['adres']) ? $userData['adres'] : ''; ?>">
+                      <label for="lokalizacjageograficzna" class="form-label mt-3">Lokalizacja geograficzna:</label>
+                      <input type="text" name="lokalizacjageograficzna" class="form-control mt-1" id="text2" aria-describedby="emailHelp" value="<?php echo isset($userData['lokalizacja_geograficzna']) ? $userData['lokalizacja_geograficzna'] : ''; ?>">
+                      <label for="informacje" class="form-label mt-3">Informacje:<br></label>
+                      <input type="text" name="informacje" class="form-control mt-1" id="date1" aria-describedby="emailHelp" value="<?php echo isset($userData['informacje']) ? $userData['informacje'] : ''; ?>" >
+                    </div>
+                    
+                    <input type="submit" class="btn btn-primary float-end" name="zapisz1" value="Zapisz"><br><br>
+              </form>
+                </div>
+              </div>
+            </div>
+  
+                    
+        <?php
+
+  ?>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          
+          
+   
+
+        
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>          
+        <?php 
+  if(isset($_SESSION['id']) && $_SESSION["czyfirma"] == false){
+  ?>
+          <h1>Mój Profil</h1>
+          <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
+          <?php
+          echo "<pre>";
+          print_r($_SESSION);
+          print_r($_GET);
+          echo "</pre>";
+
+              
+       
+                 
+    $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
+    $sql = "SELECT id, name, image FROM `images` WHERE id=$_SESSION[id]";
+    $result = mysqli_query($conn, $sql);
+     
+    while ($row = mysqli_fetch_object($result))
+    {
+      echo "<img src='data:image;base64,".base64_encode($row->image)."' height='300px'>";
+ } ?>
+
                      <form method="POST" action="upload.php" enctype="multipart/form-data">
                           <p>
                               <label>Zmień zdjęcie</label><br>
@@ -281,6 +400,9 @@ $conn->close();
                   <input type="date" name="uczeszczaldo" class="form-control mt-1" id="uczeszczaldo" aria-describedby="emailHelp" value="<?php echo isset($userData['okres_do']) ? $userData['okres_do'] : ''; ?>">
                   <button type="submit" class="btn btn-primary float-end mt-3" name="zapisz4">Zapisz</button><br><br>
         </form>
+        <?php
+  }
+  ?>
                 </div>
               </div>
             </div>
@@ -296,8 +418,8 @@ $conn->close();
     </div>
   </div>
   </div>
-
-<br><br><br><br><br><br><br><br>
+  </div>
+  <br><br><br><br><br><br><br><br>
   <footer class="text-center text-lg-start bg-light text-muted">
     <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"> 
     </section>

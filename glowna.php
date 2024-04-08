@@ -1,6 +1,15 @@
 <?php
   session_start();
- 
+  $servername = "localhost";
+  $username = "root";
+  $password = "";
+  $dbname = "baza_systemogloszeniowy";
+  
+  $conn = new mysqli($servername, $username, $password, $dbname);
+  
+  if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+  }
 
 ?>
 <!DOCTYPE html>
@@ -39,17 +48,29 @@
           </a>
         </li>
         <?php
+        
             if(isset($_SESSION['id'])){
-            echo <<<html
+            
+            ?>
+            
             <li class="nav-item custom-link1">
-              <a href="uzytkownik/profil.php" class="nav-link">
+              <a href="uzytkownik/profil.php?idFirmy= 
+              <?php
+                if($_SESSION['czyfirma']){
+                  $query = "SELECT * FROM firma where konto_id = " . $_SESSION['id'];
+                  $return = $conn->query($query);
+                  $row = $return -> fetch_assoc();
+                  echo  $row['id'];
+                }
+              ?>
+              " class="nav-link">
                 Mój profil
               </a>
             </li>
        
-            html;
+            <?php
           }
-        ?>
+        ?>  
       </ul>
       <ul class="navbar-nav ms-auto">
 
@@ -215,16 +236,7 @@ html;
 				</div>
 
  <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "baza_systemogloszeniowy";
 
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
 
 $sql = "SELECT ogloszenie.*, firma.* FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id";
 $result = $conn->query($sql);

@@ -15,6 +15,7 @@ if(isset($_POST['submit'])){
     }
 
     if(!isset($error)){
+      $selectt="SELECT * FROM Firm";
         $select = "SELECT * FROM konto WHERE email = '$email'";
         $result = $conn->query($select);
 
@@ -25,8 +26,7 @@ if(isset($_POST['submit'])){
             if ($row['haslo'] == $password) {
                 $_SESSION['id'] =  $row['Id'];
                 $_SESSION['czyfirma'] = $row['firma'];
-                $_SESSION['czyadmin'] = $row['admin'];
-                
+                $_SESSION['czyadmin'] = $row['admin'];                
                 header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
             } else {
                 $error = 'Nieprawidłowe hasło!';

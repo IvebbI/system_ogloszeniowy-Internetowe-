@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 06, 2024 at 12:03 PM
+-- Generation Time: Apr 08, 2024 at 10:15 PM
 -- Wersja serwera: 10.4.32-MariaDB
 -- Wersja PHP: 8.2.12
 
@@ -86,6 +86,7 @@ INSERT INTO `doswiadczenie` (`id`, `id_uzytkownika`, `stanowisko`, `nazwa_firmy`
 CREATE TABLE `firma` (
   `id` int(11) NOT NULL,
   `nazwa_firmy` varchar(100) NOT NULL,
+  `konto_id` int(11) NOT NULL,
   `adres` varchar(200) NOT NULL,
   `lokalizacja_geograficzna` varchar(100) DEFAULT NULL,
   `informacje` text DEFAULT NULL,
@@ -96,17 +97,9 @@ CREATE TABLE `firma` (
 -- Dumping data for table `firma`
 --
 
-INSERT INTO `firma` (`id`, `nazwa_firmy`, `adres`, `lokalizacja_geograficzna`, `informacje`, `logo_url`) VALUES
-(1, 'Firma 1', 'Adres Firma 1', 'Lokalizacja 1', 'Informacje o Firma 1', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(2, 'Firma 2', 'Adres Firma 2', 'Lokalizacja 2', 'Informacje o Firma 2', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(3, 'Firma 3', 'Adres Firma 3', 'Lokalizacja 3', 'Informacje o Firma 3', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(4, 'Firma 4', 'Adres Firma 4', 'Lokalizacja 4', 'Informacje o Firma 4', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(5, 'Firma 5', 'Adres Firma 5', 'Lokalizacja 5', 'Informacje o Firma 5', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(6, 'Firma 6', 'Adres Firma 6', 'Lokalizacja 6', 'Informacje o Firma 6', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(7, 'Firma 7', 'Adres Firma 7', 'Lokalizacja 7', 'Informacje o Firma 7', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(8, 'Firma 8', 'Adres Firma 8', 'Lokalizacja 8', 'Informacje o Firma 8', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(9, 'Firma 9', 'Adres Firma 9', 'Lokalizacja 9', 'Informacje o Firma 9', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png'),
-(10, 'Firma 10', 'Adres Firma 10', 'Lokalizacja 10', 'Informacje o Firma 10', 'https://upload.wikimedia.org/wikipedia/commons/8/80/Bieronka_logo_no_claim.png');
+INSERT INTO `firma` (`id`, `nazwa_firmy`, `konto_id`, `adres`, `lokalizacja_geograficzna`, `informacje`, `logo_url`) VALUES
+(3, 'Ea games', 3, 'Limanowa 34-600 52', 'Limanowa ', 'Testowa informacja', NULL),
+(4, 'Ea games', 3, 'Limanowa 34-600 52', 'Limanowa ', 'Testowa informacja', NULL);
 
 -- --------------------------------------------------------
 
@@ -171,10 +164,20 @@ CREATE TABLE `konto` (
 
 INSERT INTO `konto` (`Id`, `email`, `haslo`, `admin`, `firma`) VALUES
 (1, 'knurowskikarol12345@gmail.com', '202cb962ac59075b964b07152d234b70', 'TAK', ''),
-(2, 's@s', '202cb962ac59075b964b07152d234b70', 'NIE', 'NIE'),
-(3, 'test@s', '202cb962ac59075b964b07152d234b70', 'NIE', 'TAK'),
+(2, 'kami@gmail.com', '202cb962ac59075b964b07152d234b70', 'NIE', 'NIE'),
+(3, 'karolek6060@gmail.com', '202cb962ac59075b964b07152d234b70', 'NIE', 'TAK'),
 (4, 's@asdasd', '202cb962ac59075b964b07152d234b70', 'NIE', 'NIE'),
 (5, 'karolxdv2@gmail.com', '202cb962ac59075b964b07152d234b70', 'NIE', 'NIE');
+
+--
+-- Wyzwalacze `konto`
+--
+DELIMITER $$
+CREATE TRIGGER `Add Company Informations` AFTER INSERT ON `konto` FOR EACH ROW BEGIN
+INSERT INTO `firma`(`id`, `nazwa_firmy`, `konto_id`, `adres`, `lokalizacja_geograficzna`, `informacje`,`logo_url`) VALUES (null,'',Id,'','','','');
+END
+$$
+DELIMITER ;
 
 -- --------------------------------------------------------
 
@@ -252,14 +255,14 @@ CREATE TABLE `ogloszenie` (
 --
 
 INSERT INTO `ogloszenie` (`id`, `id_firmy`, `nazwa`, `poziom_stanowiska`, `rodzaj_umowy`, `wymiar_etatu`, `rodzaj_pracy`, `widelki_wynagrodzenia`, `dni_pracy`, `godziny_pracy`, `data_waznosci`, `kategoria`, `zakres_obowiazkow`, `wymagania_kandydata`, `oferowane_benefity`, `informacje_o_firmie`) VALUES
-(1, 1, 'Stanowisko 1', 'Junior', 'Umowa o pracę', 'Pełny etat', 'Stacjonarna', '5000-6000 PLN', 'Pon-Pt', '8:00-16:00', '2023-12-31', 'Edukacja', 'Opis obowiązków stanowiska 1', 'Wymagania dla kandydata stanowiska 1', 'Benefity oferowane przez firmę 1', 'Informacje o Firmie 1'),
+(1, 1, 'Senior UX Designer', 'Junior', 'Umowa o pracę', 'Pełny etat', 'Stacjonarna', '5000-6000 PLN', 'Pon-Pt', '8:00-16:00', '2023-12-31', 'Edukacja', 'Opis obowiązków stanowiska 1', 'Wymagania dla kandydata stanowiska 1', 'Benefity oferowane przez firmę 1', 'Informacje o Firmie 1'),
 (2, 2, 'Stanowisko 2', 'Senior', 'Umowa zlecenie', 'Część etatu', 'Zdalna', '100-120 PLN/h', 'Elastyczne', 'Do uzgodnienia', '2023-12-15', 'Energetyka', 'Opis obowiązków stanowiska 2', 'Wymagania dla kandydata stanowiska 2', 'Benefity oferowane przez firmę 2', 'Informacje o Firmie 2'),
 (3, 3, 'Stanowisko 3', 'Menedżer', 'Umowa o dzieło', 'Pełny etat', 'Hybrydowa', '8000-10000 PLN', 'Pon-Sob', '9:00-17:00', '2024-01-10', 'Produkcja', 'Opis obowiązków stanowiska 3', 'Wymagania dla kandydata stanowiska 3', 'Benefity oferowane przez firmę 3', 'Informacje o Firmie 3'),
-(4, 4, 'Stanowisko 4', 'Specjalista', 'Staż/praktyka', 'Dodatkowa/tymczasowa', 'Stacjonarna', '1200-1500 PLN', 'Sob-Nd', '10:00-18:00', '2023-11-30', 'Hotelarstwo', 'Opis obowiązków stanowiska 4', 'Wymagania dla kandydata stanowiska 4', 'Benefity oferowane przez firmę 4', 'Informacje o Firmie 4'),
+(4, 4, 'Stanowisko 4', 'Specjalista', 'Staż/praktyka', 'część etatu', 'Stacjonarna', '1200-1500 PLN', 'Sob-Nd', '10:00-18:00', '2023-11-30', 'Hotelarstwo', 'Opis obowiązków stanowiska 4', 'Wymagania dla kandydata stanowiska 4', 'Benefity oferowane przez firmę 4', 'Informacje o Firmie 4'),
 (5, 5, 'Stanowisko 5', 'Ekspert', 'Umowa o pracę', 'Pełny etat', 'Zdalna', '15000-20000 PLN', 'Pon-Pt', '8:00-16:00', '2023-12-20', 'Edukacja', 'Opis obowiązków stanowiska 5', 'Wymagania dla kandydata stanowiska 5', 'Benefity oferowane przez firmę 5', 'Informacje o Firmie 5'),
 (6, 6, 'Stanowisko 6', 'Junior', 'Umowa o pracę', 'Część etatu', 'Stacjonarna', '4000-4500 PLN', 'Pon-Pt', '12:00-18:00', '2024-01-05', 'Energetyka', 'Opis obowiązków stanowiska 6', 'Wymagania dla kandydata stanowiska 6', 'Benefity oferowane przez firmę 6', 'Informacje o Firmie 6'),
 (7, 7, 'Stanowisko 7', 'Menedżer', 'Umowa o pracę', 'Pełny etat', 'Hybrydowa', '9000-11000 PLN', 'Pon-Sob', '9:00-17:00', '2023-12-25', 'Produkcja', 'Opis obowiązków stanowiska 7', 'Wymagania dla kandydata stanowiska 7', 'Benefity oferowane przez firmę 7', 'Informacje o Firmie 7'),
-(8, 8, 'Stanowisko 8', 'Specjalista', 'Staż/praktyka', 'Dodatkowa/tymczasowa', 'Zdalna', '1300-1600 PLN', 'Sob-Nd', '10:00-18:00', '2023-11-27', 'Hotelarstwo', 'Opis obowiązków stanowiska 8', 'Wymagania dla kandydata stanowiska 8', 'Benefity oferowane przez firmę 8', 'Informacje o Firmie 8'),
+(8, 8, 'Stanowisko 8', 'Specjalista', 'Staż/praktyka', 'część etatu', 'Zdalna', '1300-1600 PLN', 'Sob-Nd', '10:00-18:00', '2023-11-27', 'Hotelarstwo', 'Opis obowiązków stanowiska 8', 'Wymagania dla kandydata stanowiska 8', 'Benefity oferowane przez firmę 8', 'Informacje o Firmie 8'),
 (9, 9, 'Stanowisko 9', 'Ekspert', 'Umowa o dzieło', 'Pełny etat', 'Stacjonarna', '18000-22000 PLN', 'Pon-Pt', '8:00-16:00', '2023-12-18', 'Edukacja', 'Opis obowiązków stanowiska 9', 'Wymagania dla kandydata stanowiska 9', 'Benefity oferowane przez firmę 9', 'Informacje o Firmie 9'),
 (10, 10, 'Stanowisko 10', 'Kierownik', 'Umowa o pracę', 'Pełny etat', 'Hybrydowa', '12000-15000 PLN', 'Pon-Pt', '9:00-17:00', '2024-01-15', 'Produkcja', 'Opis obowiązków stanowiska 10', 'Wymagania dla kandydata stanowiska 10', 'Benefity oferowane przez firmę 10', 'Informacje o Firmie 10');
 
@@ -367,7 +370,9 @@ ALTER TABLE `doswiadczenie`
 -- Indeksy dla tabeli `firma`
 --
 ALTER TABLE `firma`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `konto_id` (`konto_id`),
+  ADD KEY `konto_id_2` (`konto_id`);
 
 --
 -- Indeksy dla tabeli `images`
@@ -449,7 +454,7 @@ ALTER TABLE `doswiadczenie`
 -- AUTO_INCREMENT for table `firma`
 --
 ALTER TABLE `firma`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `images`
@@ -523,6 +528,13 @@ ALTER TABLE `doswiadczenie`
   ADD CONSTRAINT `doswiadczenie_ibfk_1` FOREIGN KEY (`id_uzytkownika`) REFERENCES `uzytkownik` (`id`);
 
 --
+-- Constraints for table `firma`
+--
+ALTER TABLE `firma`
+  ADD CONSTRAINT `firma_ibfk_1` FOREIGN KEY (`konto_id`) REFERENCES `konto` (`Id`),
+  ADD CONSTRAINT `firma_ibfk_2` FOREIGN KEY (`id`) REFERENCES `ogloszenie` (`id_firmy`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `jezyk`
 --
 ALTER TABLE `jezyk`
@@ -539,12 +551,6 @@ ALTER TABLE `kurs`
 --
 ALTER TABLE `link`
   ADD CONSTRAINT `link_ibfk_1` FOREIGN KEY (`id_uzytkownika`) REFERENCES `uzytkownik` (`id`);
-
---
--- Constraints for table `ogloszenie`
---
-ALTER TABLE `ogloszenie`
-  ADD CONSTRAINT `ogloszenie_ibfk_1` FOREIGN KEY (`id_firmy`) REFERENCES `firma` (`id`);
 
 --
 -- Constraints for table `umiejetnosc`
