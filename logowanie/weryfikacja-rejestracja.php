@@ -2,45 +2,38 @@
 @include 'config.php';
 
 session_start();
-//var_dump($_SESSION['registration_data']);
 
 if (isset($_POST['submit'])) {
     $email = mysqli_real_escape_string($conn, $_SESSION['registration_data']['usermail']);
-    $kodWeryfikacyjny = mysqli_real_escape_string($conn, $_SESSION['registration_data']['verification_code']);
+    $kodWeryfikacyjny = mysqli_real_escape_string($conn, $_POST['verification_code']);
 
+    if ($kodWeryfikacyjny == $_SESSION['registration_data']['verification_code']) {
+        $admin = "NIE";
+        $firma = $_SESSION['registration_data']['checkboxfirma'];
 
+        $insert = "UPDATE konto SET admin='$admin', firma='$firma',zweryfikowany='TAK' WHERE email='$email'";
+        $result = mysqli_query($conn, $insert);
 
-    if (!isset($error)) {
-        $select = "SELECT * FROM konto WHERE email = '$email' ";
-        $result = mysqli_query($conn, $select);
-        
         if ($result) {
-            $userData = mysqli_fetch_assoc($result);
+            $select = "SELECT * FROM konto WHERE email = '$email'";
+            $result_select = mysqli_query($conn, $select);
+            if ($result_select) {
+                $userData = mysqli_fetch_assoc($result_select);
+                $_SESSION['id'] =  $userData['id'];
+                $_SESSION['czyfirma'] = $firma;
+                $_SESSION['czyadmin'] = $admin;
+                session_destroy();
 
-            if ($userData) {
-                $admin = "NIE";
-                $firma = isset($_SESSION['registration_data']['checkboxfirma']) && $_SESSION['registration_data']['checkboxfirma'] == 1 ? 'TAK' : 'NIE';
-                $hashedPassword = $userData['haslo']; 
-
-                $insert = "INSERT INTO konto(email, haslo, admin, firma) VALUES('$email','$hashedPassword','$admin','$firma')";
-                $result_insert = mysqli_query($conn, $insert);
-
-                if ($result_insert) {
-                    $_SESSION['id'] =  $userData['id'];
-                    $_SESSION['czyfirma'] = $firma; 
-                    $_SESSION['czyadmin'] = $admin;
-
-                    header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
-                    exit;
-                } else {
-                    $error[] = 'Błąd podczas dodawania danych do bazy: ' . mysqli_error($conn);
-                }
+                header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
+                exit;
             } else {
-                $error[] = 'Nieprawidłowy kod weryfikacyjny!';
+                $error[] = 'Błąd podczas pobierania danych z bazy: ' . mysqli_error($conn);
             }
         } else {
-            $error[] = 'Błąd w zapytaniu SQL: ' . mysqli_error($conn);
+            $error[] = 'Błąd podczas aktualizowania danych w bazie: ' . mysqli_error($conn);
         }
+    } else {
+        $error[] = 'Nieprawidłowy kod weryfikacyjny!';
     }
 }
 ?>

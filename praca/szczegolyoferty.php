@@ -15,6 +15,7 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
     crossorigin="anonymous"
   />
+
   <link rel="stylesheet" href="../style.css" />
 </head>
 <body>
@@ -117,13 +118,117 @@ html;
 
 
 
-<?php 
-  echo "<pre>";
-  print_r($_GET["id"]);
-  echo "</pre>";
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col">
+      <p class="text-black mt-5">Szukasz więcej ofert pracy?</p>
+          <p class="text-black">dobrze się składa ponieważ w naszych ofertach napewno znajdziesz coś dla siebie!
+          Wystarczy że wejdziesz w ten <a href="oferty_pracy.php" class="text-black">link</a>
+          </p>
+          
+    </div>
+      <div class="col">
+        <?php
+  $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
+  $sql = "SELECT * from ogloszenie
+  LEFT JOIN firma on ogloszenie.id_firmy=firma.id
+  LEFT JOIN images on firma.konto_id=images.id
+  WHERE ogloszenie.id=$_GET[id]";
+  $result = mysqli_query($conn, $sql);
+      while ($row = mysqli_fetch_object($result))
+  {
+    echo "<img src='data:image;base64,".base64_encode($row->image)."' height='300px'>";
+}  
+        ?>
+        
+
+    </div>  
+    <div class="col">
+    <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "baza_systemogloszeniowy";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+$sql = "SELECT *  FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id
+LEFT JOIN konto ON firma.konto_id=konto.Id
+LEFT JOIN images ON konto.Id=images.id";
+$result = ($conn->query($sql))->fetch_array();
+
 ?>
+      <h1><?php echo $result['nazwa']; ?></h1>
+      <p class="text-black"><?php echo $result['poziom_stanowiska']; ?></p>
+      <p class="text-black"><i class="fa-solid fa-list me-2"></i>Kategoria: <?php echo $result['kategoria']?></p>
+      <p class="text-black"><i class="fa-solid fa-hand-holding-dollar me-2"></i>Wynagrodzenie: <?php echo $result['widelki_wynagrodzenia']?></p>
+      <p class="text-black"><i class="fa-solid fa-ranking-star me-2"></i>Stanowisko: <?php echo $result['poziom_stanowiska']?></p>
+      <p class="text-black"><i class="fa-regular fa-clock me-2"></i>Data ważnośći: <?php echo $result['data_waznosci']?></p>
+      <p class="text-black"><i class="fa-solid fa-person-digging me-2"></i>Rodzaj pracy: <?php echo $result['rodzaj_pracy']?></p>
+      
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  </head>
+  <div class="announcement">
+  <hr class="announcement-separator">
+  <h3 class="announcement-title" id="announcement-1">Rodzaj umowy oraz wymiar etatu<span class="icon-toggle"><i class="fas fa-angle-down mt-1"></i></span></h3>
+  <div class="announcement-description-full" data-target="announcement-1">
+    <ul>
+      <li><?php echo $result['rodzaj_umowy'] ?></li>
+      <li><?php echo $result['wymiar_etatu'] ?></li>
+    </ul>
+  </div>
+  <hr class="announcement-separator">
+  <h3 class="announcement-title" id="announcement-2">Dni oraz godziny pracy:  <span class="icon-toggle"><i class="fas fa-angle-down mt-1"></i></span></h3>
+  <div class="announcement-description-full" data-target="announcement-1">
+    <ul>
+      <li><?php echo $result['dni_pracy'] ?></li>
+      <li><?php echo $result['godziny_pracy'] ?></li>
+    </ul>
+  </div>
+  <hr class="announcement-separator">
+  <h3 class="announcement-title" id="announcement-3">Obowiązki i wymagania:  <span class="icon-toggle"><i class="fas fa-angle-down mt-1"></i></span></h3>
+  <div class="announcement-description-full" data-target="announcement-2">
+    <ul>
+      <li><?php echo $result['zakres_obowiazkow'] ?></li>
+      <li><?php echo $result['wymagania_kandydata'] ?></li>
+    </ul>
+  </div>
+  <hr class="announcement-separator">
+  <h3 class="announcement-title" id="announcement-3">Oferowane benefity oraz informacje o firmie:  <span class="icon-toggle"><i class="fas fa-angle-down mt-1"></i></span></h3>
+  <div class="announcement-description-full" data-target="announcement-2">
+    <ul>
+      <li><?php echo $result['oferowane_benefity'] ?></li>
+      <li><?php echo $result['informacje_o_firmie'] ?></li>
+    </ul>
+  </div>
+  <hr class="announcement-separator">
+  <?php
+              if(isset($_SESSION['id'])){
+                echo <<<html
+                
+                <input type='submit' class="aplicate-to-announcement" value="Aplikuj do tej oferty"></form>
+                html;
+              }
+              if(!isset($_SESSION['id'])){
+                echo <<<html
+
+                <h1 class="text-danger">Aby móc aplikować do tej oferty zaloguj się lub zarejestruj!</h1>
+                html;
+              }
+          ?>
+</div>
+    </div>
+    
 
 
+</div>
+  </div>
+</body>
 
 
 
@@ -202,7 +307,22 @@ html;
     <a class="text-reset fw-bold" href="https://mdbootstrap.com/">Karol Knurowski</a>
   </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+$(document).ready(function() {
+  $('.announcement-title').click(function() {
+    var targetId = $(this).attr('id'); // Get the ID of the clicked title
+    var icon = $(this).find('.icon-toggle i'); // Get the icon within the title
+    $(this).nextAll('.announcement-description-full').first().toggle(); // Toggle the next description
+    icon.toggleClass('fa-angle-up fa-angle-down');
+  });
+});
+
+
+
+
+  </script>
   <script
     src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

@@ -16,6 +16,7 @@
     crossorigin="anonymous"
   />
   <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-5">
@@ -118,12 +119,48 @@ html;
 			<div class="container">
 				<div class="section-header">
 					<h2>Witaj w panelu firmy</h2>
+
 					<p>Na tej stronie masz dostęp do wszystkich ważnych zarządzaniach stroną!</p>
                     <p>Uważaj na elementy zachowane na stronie ponieważ w łatwy sposób możesz usunąć ważne rzeczy</p>
-		
-		
 		</section>
-
+<?php
+  
+    $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+    $username = 'root';
+    $password = '';
+    
+    try {
+        $pdo = new PDO($dsn, $username, $password);
+      
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        
+        $query = "SELECT * FROM ogloszenie WHERE id_firmy=:firmaID";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(':firmaID', $_SESSION['firmaID']);
+        $stmt->execute();
+        
+        echo "<table>";
+        echo "<tr><th>ID</th><th>Nazwa Ogloszenia</th><th>Poziom Stanowiska</th><th>Akcje</th></tr>"; 
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr><td>{$row['id']}</td>
+            <td><form method='GET' action='edytuj_usun.php'>
+            <label>{$row['nazwa']}</label>
+            <input type='hidden' name='id' value='{$row['id']}'>
+            <input type='hidden' name='tabela' value='ogloszenie'>
+            </td><td>
+            {$row['poziom_stanowiska']}
+            </td><td><center>
+            <input type='submit' name='edit' value='Edytuj'  style='background-color: #f2f2f2; border: 1px solid black; width:70px;'>
+            <input type='submit' name='delete' value='Usun'  style='background-color: #f2f2f2; border: 1px solid black; width:70px;'>
+            </form></td></tr></center>";
+        }
+        echo "</table>";
+        
+        $pdo = null;
+    } catch (PDOException $e) { 
+        echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+    }
+?>
 
 
 

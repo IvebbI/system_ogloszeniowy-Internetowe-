@@ -123,11 +123,154 @@ html;
 
 		
 		
-		</section>
+      </section>
+  <div  class="container">
+  <div class="container mt-5">
+        <form method="GET" action="dodaj_oglo.php">
+            <div class="mb-3">
+                <label for="nazwaStanowiska" class="form-label">Nazwa Stanowiska</label>
+                <input type="text" name="nazwastanowiska"  required class="form-control" id="nazwaStanowiska" aria-describedby="nazwaStanowiskaHelp">
+            </div>
+            <div class="mb-3">
+                <label for="kategoria" class="form-label">Kategoria:</label>
+                <select name="kategoriao" class="form-select" require>
+                    <?php
+                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
+                        $sql = "SELECT * FROM kategoria";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['kategoria']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="poziomstanowiskaa" class="form-label">Poziom Stanowiska:</label>
+                <select name="poziom_stanowiska" class="form-select" >
+                    <?php 
+                        $sql = "SELECT * FROM poziom_stanowiska";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['poziom_stanowiska']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="rodzajumowy" class="form-label">Rodzaj Umowy:</label>
+                <select name="rodzaj_umowy" class="form-select">
+                    <?php 
+                        $sql = "SELECT * FROM rodzaj_umowy";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['rodzaj_umowy']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="wymiarEtatu" class="form-label">Wymiar Etatu:</label>
+                <select name="wymiar_etatu" class="form-select">
+                    <?php 
+                        $sql = "SELECT * FROM wymiar_etatu";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['wymiar_etatu']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="rodzajPracy" class="form-label">Rodzaj Pracy:</label>
+                <select name="rodzaj_pracy" class="form-select">
+                    <?php 
+                        $sql = "SELECT * FROM rodzaj_pracy";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['rodzaj_pracy']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="wynagrodzenie" class="form-label">Wynagrodzenie:</label>
+                <input type="text"  required name="wynagrodzenie" class="form-control" id="wynagrodzenie">
+            </div>
+            <div class="mb-3">
+                <label for="dniPracy" class="form-label">Dni pracy:</label>
+                <label>od:</label>
+                <select name="dni_pracy_od" class="form-select">
+                    <?php
+                        $sql = "SELECT * FROM dni_pracy";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['dni_pracy']."</option>";
+                        }
+                    ?>
+                </select>
+                <label for="dni_pracy_do" class="form-label">do:</label>
+                <select name="dni_pracy_do" class="form-select">
+                    <?php
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['dni_pracy']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="godzinyPracy" class="form-label">Godziny pracy:</label>
+                <label>od:</label>
+                <select name="godziny_od" class="form-select">
+                    <?php
+                        $sql = "SELECT * FROM godziny_pracy";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['godziny_pracy']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="godzinyPracy" class="form-label">do:</label>
+                <select name="godziny_do" class="form-select">
+                    <?php
+                        $sql = "SELECT * FROM godziny_pracy";
+                        $resultt = $conn->query($sql);
+                        while ($row = $resultt->fetch_assoc()) {
+                            echo "<option>".$row['godziny_pracy']."</option>";
+                        }
+                    ?>
+                </select>
+            </div>
+            <div class = "mb-3">
+            <label for="nazwaStanowiska" class="form-label">Data ważności:</label>
+                <input type="Date" name="datawaznosci" class="form-control" id="nazwaStanowiska" aria-describedby="nazwaStanowiskaHelp" required>
+                      </div>
+                        <div class="mb-3">
+                        <label for="rodzajPracy" class="form-label">Zakres obowiązków:</label>
+                <textarea class="form-control" required id="exampleFormControlTextarea1" name="zakresobowiazkow" rows="3"></textarea>
+                      </div>
 
+                <div class="mb-3">
 
+                <label for="" class="form-label">Wymagania kandydata:</label>
+                <textarea class="form-control" required id="exampleFormControlTextarea1" name="wymaganiakandydata" rows="3"></textarea>
+                      </div>
+                      <div class="mb-3">
 
+                      <label for="" class="form-label">Oferowane benefity:</label>
+                <textarea class="form-control" required id="exampleFormControlTextarea1" name="oferowanebenfity" rows="3"></textarea>
+                      </div>
+                      <div class="mb-3">
 
+                      <label for="" class="form-label">Informacje firmy:</label>
+                <textarea class="form-control" required id="exampleFormControlTextarea1" name="informacjeFirmy" rows="3"></textarea>
+                      </div>
+              <br>
+            <button type="submit" class="btn btn-primary">Dodaj</button>
+        </form>
+    </div></div><br><br>
 
 
 

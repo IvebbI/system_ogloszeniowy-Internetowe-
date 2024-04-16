@@ -1,0 +1,58 @@
+table {
+    border-collapse: collapse;
+    width: 70%; /* Zmniejszono szerokość tabeli */
+    margin: 20px auto;
+}
+th, td {
+    border: 1px solid black;
+    padding: 6px; /* Zmniejszono odstępy wewnątrz komórek */
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+form {
+    margin: 20px auto;
+    text-align: center;
+}
+input[type="text"], input[type="submit"] {
+    background-color: #f2f2f2; border: 1px solid black; width:70px;
+    padding: 4px; /* Zmniejszono padding dla pól tekstowych i przycisków */
+    margin: 3px; /* Zmniejszono marginesy dla pól tekstowych i przycisków */
+}
+.tables-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.tables-container .table-wrapper {
+    flex-basis: 70%; /* Szerokość każdej tabeli */
+    margin: 10px; /* Mniejszy margines między tabelami */
+}
+
+.table-wrapper table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table-wrapper th, .table-wrapper td {
+    border: 1px solid black;
+    padding: 6px;
+    text-align: left;
+}
+
+.table-wrapper th {
+    background-color: #f2f2f2;
+}
+
+.table-wrapper form {
+    margin: 20px auto;
+    text-align: center;
+}
+
+.table-wrapper input[type="text"], .table-wrapper input[type="submit"] {
+    padding: 4px;
+    margin: 3px;
+}
+

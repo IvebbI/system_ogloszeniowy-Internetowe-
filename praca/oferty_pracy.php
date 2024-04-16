@@ -130,13 +130,15 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT ogloszenie.*, firma.* FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id";
+$sql = "SELECT ogloszenie.id,ogloszenie.nazwa,ogloszenie.wymiar_etatu,ogloszenie.widelki_wynagrodzenia,images.image,firma.adres,firma.nazwa_firmy  FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id
+LEFT JOIN konto ON firma.konto_id=konto.Id
+LEFT JOIN images ON konto.Id=images.id";
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
     $counter = 0; 
 ?>
-
+  
     <div class="container">
         <div class="row">
 <?php
@@ -166,7 +168,11 @@ if ($result->num_rows > 0) {
                         <div class="container">
                             <div class="row">
                                 <div class="col-5 col-sm-4">
-                                    <img src="<?php echo $row['logo_url']; ?>" class="image-offerts img-fluid">
+
+                               <?php
+                                  echo "<img src='data:image;base64,".base64_encode($row["image"])."' height='300px'>";
+                               ?>
+                                    <!-- <img src="data:image;base64," class="image-offerts img-fluid"> -->
                                 </div>
                                 <div class="col-7 col-sm-8">
                                     <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?>

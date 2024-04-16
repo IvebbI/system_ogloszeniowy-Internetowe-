@@ -1,0 +1,22 @@
+table {
+    border-collapse: collapse;
+    width: 90%; /* Zmniejszono szerokość tabeli */
+    margin: 20px auto;
+}
+th, td {
+    border: 1px solid black;
+    padding: 6px; /* Zmniejszono odstępy wewnątrz komórek */
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+form {
+    margin: 20px auto;
+    text-align: center;
+}
+input[type="text"], input[type="submit"] {
+    
+    padding: 4px; /* Zmniejszono padding dla pól tekstowych i przycisków */
+    margin: 3px; /* Zmniejszono marginesy dla pól tekstowych i przycisków */
+}

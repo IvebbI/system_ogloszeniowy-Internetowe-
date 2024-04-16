@@ -9,25 +9,34 @@ if(isset($_POST['submit'])){
     $email = mysqli_real_escape_string($conn, $_POST['usermail']);
     $password = md5($_POST['password']);
 
-
     if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
         $error = 'Nieprawidłowy adres e-mail!';
     }
 
     if(!isset($error)){
-      $selectt="SELECT * FROM Firm";
         $select = "SELECT * FROM konto WHERE email = '$email'";
         $result = $conn->query($select);
 
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-
-            if ($row['haslo'] == $password) {
+            // Sprawdzenie zahashowanego hasła
+            if (password_verify($_POST['password'], $row['haslo'])) {
                 $_SESSION['id'] =  $row['Id'];
                 $_SESSION['czyfirma'] = $row['firma'];
-                $_SESSION['czyadmin'] = $row['admin'];                
+                $_SESSION['czyadmin'] = $row['admin'];  
+                
+
+                // Sprawdzenie, czy użytkownik jest firmą
+                if ($_SESSION['czyfirma'] == 'TAK') {
+                    $sql = "SELECT * FROM firma WHERE konto_id = {$_SESSION['id']}";
+                    $return = $conn->query($sql);
+                    $firmaData = $return->fetch_assoc();
+                    $_SESSION['firma_id'] = $firmaData['id'];
+                }
+
                 header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
+                exit;
             } else {
                 $error = 'Nieprawidłowe hasło!';
             }

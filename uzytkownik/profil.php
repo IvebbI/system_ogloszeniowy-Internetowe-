@@ -144,12 +144,19 @@ $conn->close();
 <div class="container">
 
 
-
+<?php
+include '../logowanie/config.php';
+if($_SESSION['czyfirma']=='TAK'){
+  ?>
   <div class="row">
     <div class="col">
       <div class="card">
         <div class="defaults">
           <h1>Moja firma</h1>
+            <?php
+    echo $_SESSION['firma_id'];
+
+?>  
           <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji firmy</p>
           <?php
               
@@ -163,7 +170,6 @@ $conn->close();
     {
       echo "<img src='data:image;base64,".base64_encode($row->image)."' height='300px'>";
  } ?>
-
                      <form method="POST" action="upload.php" enctype="multipart/form-data">
                           <p>
                               <label>Zmień zdjęcie firmy</label><br>
@@ -185,10 +191,9 @@ $conn->close();
            
                     <div class="mb-3">
                       <?php
-include '../logowanie/config.php';
-if(!isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])){
-  header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
-}
+
+  
+
 
 if (isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
@@ -220,17 +225,17 @@ if (isset($_SESSION['id'])) {
 // Zamykanie połączenia z bazą danych po zakończeniu operacji
 $conn->close();
                       ?>
-                      <form action="edytuj-profil.php" method="POST">
+                      <form action="edytuj-firme.php" method="POST">
                       <label for="email1" class="form-label mt-1" >E-mail</label>
-                      <input type="text" name="email" class="form-control mt-3" id="email1" aria-describedby="emailHelp" value="<?php echo isset($userData['email']) ? $userData['email'] : ''; ?>">
+                      <input type="text" name="emailfirma" class="form-control mt-3" id="email1" aria-describedby="emailHelp" value="<?php echo isset($userData['email']) ? $userData['email'] : ''; ?>">
                       <label for="nazwafirmyy" class="form-label mt-1" >Nazwa firmy</label>
                       <input type="text" name="nazwafirmyy" class="form-control mt-1" id="link" aria-describedby="emailHelp" value="<?php echo isset($userData['nazwa_firmy']) ? $userData['nazwa_firmy'] : ''; ?>">
                       <label for="adres" class="form-label mt-3">Adres:</label>
-                      <input type="text" name="adres" class="form-control mt-1" id="text1" aria-describedby="emailHelp" value="<?php echo isset($userData['adres']) ? $userData['adres'] : ''; ?>">
+                      <input type="text" name="adresfirmy" class="form-control mt-1" id="text1" aria-describedby="emailHelp" value="<?php echo isset($userData['adres']) ? $userData['adres'] : ''; ?>">
                       <label for="lokalizacjageograficzna" class="form-label mt-3">Lokalizacja geograficzna:</label>
-                      <input type="text" name="lokalizacjageograficzna" class="form-control mt-1" id="text2" aria-describedby="emailHelp" value="<?php echo isset($userData['lokalizacja_geograficzna']) ? $userData['lokalizacja_geograficzna'] : ''; ?>">
+                      <input type="text" name="lokalizacjageograficznafirmy" class="form-control mt-1" id="text2" aria-describedby="emailHelp" value="<?php echo isset($userData['lokalizacja_geograficzna']) ? $userData['lokalizacja_geograficzna'] : ''; ?>">
                       <label for="informacje" class="form-label mt-3">Informacje:<br></label>
-                      <input type="text" name="informacje" class="form-control mt-1" id="date1" aria-describedby="emailHelp" value="<?php echo isset($userData['informacje']) ? $userData['informacje'] : ''; ?>" >
+                      <input type="text" name="informacjefirmy" class="form-control mt-1" id="date1" aria-describedby="emailHelp" value="<?php echo isset($userData['informacje']) ? $userData['informacje'] : ''; ?>" >
                     </div>
                     
                     <input type="submit" class="btn btn-primary float-end" name="zapisz1" value="Zapisz"><br><br>
@@ -241,7 +246,7 @@ $conn->close();
   
                     
         <?php
-
+}
   ?>
                 </div>
               </div>
@@ -258,18 +263,23 @@ $conn->close();
     </div>
   </div>
   </div>
-  </div>          
+  </div>
+  
+<div class="container">
+
+
+          
         <?php 
-  if(isset($_SESSION['id']) && $_SESSION["czyfirma"] == false){
+  if(isset($_SESSION['id']) && $_SESSION["czyfirma"] =='NIE'){
   ?>
+  
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div class="defaults">
           <h1>Mój Profil</h1>
           <p>W tej sekcji rozwijając poniżej listy możesz w każdej chwili edytować dane które podałeś podczas rejestracji</p>
           <?php
-          echo "<pre>";
-          print_r($_SESSION);
-          print_r($_GET);
-          echo "</pre>";
-
               
        
                  
@@ -280,7 +290,8 @@ $conn->close();
     while ($row = mysqli_fetch_object($result))
     {
       echo "<img src='data:image;base64,".base64_encode($row->image)."' height='300px'>";
- } ?>
+ } 
+ ?>
 
                      <form method="POST" action="upload.php" enctype="multipart/form-data">
                           <p>

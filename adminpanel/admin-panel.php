@@ -1,7 +1,5 @@
 <?php
-  session_start();
-
- 
+session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +13,8 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
     crossorigin="anonymous"
   />
-  <link rel="stylesheet" href="../style.css" />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../style.css" /> 
 </head>
 <body>
   <nav class="navbar navbar-expand-md navbar-light bg-light mb-5">
@@ -111,19 +110,317 @@ html;
 					<h2>Witaj w panelu admina</h2>
 					<p>Na tej stronie masz dostęp do wszystkich ważnych zarządzaniach stroną!</p>
                     <p>Uważaj na elementy zachowane na stronie ponieważ w łatwy sposób możesz usunąć ważne rzeczy</p>
-		
-		
-		</section>
+				</div>
+  </section>
+                <div class="accordion-body">
+    <h1><center>Tabela kategorie:</center></h1>
+    <div class="tables-container">
+      <div class="table-wrapper">
+        <?php
+        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+        $username = 'root';
+        $password = '';
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password);
+          
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $query = "SELECT * FROM kategoria";
+            
+            $stmt = $pdo->query($query);
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Kategoria</th><th>Akcja</th></tr>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr><td>{$row['id']}</td>
+                <form method='GET' action='edytuj_usun.php'>
+                <td><input type='text' name='nazwa' value='{$row['kategoria']}' style='width:720px'>
+                </input><input type='hidden' name='id' value = '{$row['id']}'>
+                <input type='hidden' name='tabela' value = 'kategoria']}'></td><td>
+                <input type='submit' name='edit' value='Edytuj'>
+                <input type='submit' name='delete' value='Usun'>
+                </form></td></tr>";
+            }
+            echo "</table>";
+            
+            $pdo = null;
+        } catch (PDOException $e) { 
+            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+        }
+        ?>
 
+        <form method="GET" action="dodaj_dana.php">
+          <input type="hidden" value="kategoria" name="kategoria">
+            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
+            <input type="submit" value="Dodaj">
+        </form>
+      </div>
+    </div>
+   <!-- Tabela Poziom Stanowiska  -->
+      <h1><center>Tabela Poziom Stanowiska:</center></h1>
+    <div class="tables-container">
+      <div class="table-wrapper">
+        <?php
+        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+        $username = 'root';
+        $password = '';
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password);
+          
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $query = "SELECT * FROM poziom_stanowiska";
+            
+            $stmt = $pdo->query($query);
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Poziom Stanowiska</th><th>Akcja</th></tr>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr><td>{$row['id']}</td>
+                <form method='GET' action='edytuj_usun.php'>
+                <td><input type='text' name='nazwa' value='{$row['poziom_stanowiska']}' style='width:720px'>
+                </input><input type='hidden' name='id' value = '{$row['id']}'>
+                <input type='hidden' name='tabela' value = 'poziom_stanowiska']}'></td><td>
+                <input type='submit' name='edit' value='Edytuj'>
+                <input type='submit' name='delete' value='Usun'>
+                </form></td></tr>";
+            }
+            echo "</table>";
+            
+            $pdo = null;
+        } catch (PDOException $e) { 
+            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+        }
+        ?>
 
+        <form method="GET" action="dodaj_dana.php">
+          <input type="hidden" value="kategoria" name="kategoria">
+            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
+            <input type="submit" value="Dodaj">
+        </form>
+      </div>
+    </div>
+     <!-- Tabela Rodzaj Umowy  -->
+     <h1><center>Tabela Rodzaj Umowy:</center></h1>
+    <div class="tables-container">
+      <div class="table-wrapper">
+        <?php
+        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+        $username = 'root';
+        $password = '';
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password);
+          
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $query = "SELECT * FROM rodzaj_umowy";
+            
+            $stmt = $pdo->query($query);
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Rodzaj Umowy</th><th>Akcja</th></tr>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr><td>{$row['id']}</td>
+                <form method='GET' action='edytuj_usun.php'>
+                <td><input type='text' name='nazwa' value='{$row['rodzaj_umowy']}' style='width:720px'>
+                </input><input type='hidden' name='id' value = '{$row['id']}'>
+                <input type='hidden' name='tabela' value = 'rodzaj_umowy']}'></td><td>
+                <input type='submit' name='edit' value='Edytuj'>
+                <input type='submit' name='delete' value='Usun'>
+                </form></td></tr>";
+            }
+            echo "</table>";
+            
+            $pdo = null;
+        } catch (PDOException $e) { 
+            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+        }
+        ?>
 
+        <form method="GET" action="dodaj_dana.php">
+          <input type="hidden" value="kategoria" name="kategoria">
+            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
+            <input type="submit" value="Dodaj">
+        </form>
+      </div>
+    </div>
+     <!-- Tabela Wymiar Etatu  -->
+     <h1><center>Tabela Wymiar Etatu:</center></h1>
+    <div class="tables-container">
+      <div class="table-wrapper">
+        <?php
+        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+        $username = 'root';
+        $password = '';
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password);
+          
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $query = "SELECT * FROM wymiar_etatu";
+            
+            $stmt = $pdo->query($query);
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Wymiar Etatu</th><th>Akcja</th></tr>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr><td>{$row['id']}</td>
+                <form method='GET' action='edytuj_usun.php'>
+                <td><input type='text' name='nazwa' value='{$row['wymiar_etatu']}' style='width:720px'>
+                </input><input type='hidden' name='id' value = '{$row['id']}'>
+                <input type='hidden' name='tabela' value = 'wymiar_etatu']}'></td><td>
+                <input type='submit' name='edit' value='Edytuj'>
+                <input type='submit' name='delete' value='Usun'>
+                </form></td></tr>";
+            }
+            echo "</table>";
+            
+            $pdo = null;
+        } catch (PDOException $e) { 
+            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+        }
+        ?>
 
+        <form method="GET" action="dodaj_dana.php">
+          <input type="hidden" value="kategoria" name="kategoria">
+            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
+            <input type="submit" value="Dodaj">
+        </form>
+      </div>
+    </div>
+     <!-- Tabela Rodzaj Pracy  -->
+     <h1><center>Tabela Rodzaj Pracy:</center></h1>
+    <div class="tables-container">
+      <div class="table-wrapper">
+        <?php
+        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+        $username = 'root';
+        $password = '';
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password);
+          
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $query = "SELECT * FROM rodzaj_pracy";
+            
+            $stmt = $pdo->query($query);
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Rodzaj Pracy</th><th>Akcja</th></tr>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr><td>{$row['id']}</td>
+                <form method='GET' action='edytuj_usun.php'>
+                <td><input type='text' name='nazwa' value='{$row['rodzaj_pracy']}' style='width:720px'>
+                </input><input type='hidden' name='id' value = '{$row['id']}'>
+                <input type='hidden' name='tabela' value = 'rodzaj_pracy']}'></td><td>
+                <input type='submit' name='edit' value='Edytuj'>
+                <input type='submit' name='delete' value='Usun'>
+                </form></td></tr>";
+            }
+            echo "</table>";
+            
+            $pdo = null;
+        } catch (PDOException $e) { 
+            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+        }
+        ?>
 
+        <form method="GET" action="dodaj_dana.php">
+          <input type="hidden" value="kategoria" name="kategoria">
+            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
+            <input type="submit" value="Dodaj">
+        </form>
+      </div>
+    </div>
+    <!-- Tabela Dni Pracy  -->
+    <h1><center>Tabela Dni Pracy:</center></h1>
+    <div class="tables-container">
+      <div class="table-wrapper">
+        <?php
+        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+        $username = 'root';
+        $password = '';
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password);
+          
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $query = "SELECT * FROM dni_pracy";
+            
+            $stmt = $pdo->query($query);
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Dni Pracy</th><th>Akcja</th></tr>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr><td>{$row['id']}</td>
+                <form method='GET' action='edytuj_usun.php'>
+                <td><input type='text' name='nazwa' value='{$row['dni_pracy']}' style='width:720px'>
+                </input><input type='hidden' name='id' value = '{$row['id']}'>
+                <input type='hidden' name='tabela' value = 'dni_pracy']}'></td><td>
+                <input type='submit' name='edit' value='Edytuj'>
+                <input type='submit' name='delete' value='Usun'>
+                </form></td></tr>";
+            }
+            echo "</table>";
+            
+            $pdo = null;
+        } catch (PDOException $e) { 
+            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+        }
+        ?>
 
+        <form method="GET" action="dodaj_dana.php">
+          <input type="hidden" value="kategoria" name="kategoria">
+            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
+            <input type="submit" value="Dodaj">
+        </form>
+      </div>
+    </div>
+    <!-- Tabela Godziny Pracy  -->
+    <h1><center>Tabela Godziny Pracy:</center></h1>
+    <div class="tables-container">
+      <div class="table-wrapper">
+        <?php
+        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
+        $username = 'root';
+        $password = '';
+        
+        try {
+            $pdo = new PDO($dsn, $username, $password);
+          
+            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            
+            $query = "SELECT * FROM godziny_pracy";
+            
+            $stmt = $pdo->query($query);
+            echo "<table>";
+            echo "<tr><th>ID</th><th>Godziny Pracy</th><th>Akcja</th></tr>";
+            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo "<tr><td>{$row['id']}</td>
+                <form method='GET' action='edytuj_usun.php'>
+                <td><input type='text' name='nazwa' value='{$row['godziny_pracy']}' style='width:720px'>
+                </input><input type='hidden' name='id' value = '{$row['id']}'>
+                <input type='hidden' name='tabela' value = 'godziny_pracy']}'></td><td>
+                <input type='submit' name='edit' value='Edytuj'>
+                <input type='submit' name='delete' value='Usun'>
+                </form></td></tr>";
+            }
+            echo "</table>";
+            
+            $pdo = null;
+        } catch (PDOException $e) { 
+            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
+        }
+        ?>
 
-
-
-
+        <form method="GET" action="dodaj_dana.php">
+          <input type="hidden" value="kategoria" name="kategoria">
+            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
+            <input type="submit" value="Dodaj">
+        </form>
+      </div>
+    </div>
+  </div>  
 
 <footer class="text-center text-lg-start bg-light text-muted">
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom"> 

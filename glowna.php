@@ -54,13 +54,13 @@
             ?>
             
             <li class="nav-item custom-link1">
-              <a href="uzytkownik/profil.php?idFirmy= 
+              <a href="uzytkownik/profil.php
               <?php
                 if($_SESSION['czyfirma']){
                   $query = "SELECT * FROM firma where konto_id = " . $_SESSION['id'];
                   $return = $conn->query($query);
                   $row = $return -> fetch_assoc();
-                  echo  $row['id'];
+                  $_SESSION['firmaID'] = $row['id'];
                 }
               ?>
               " class="nav-link">

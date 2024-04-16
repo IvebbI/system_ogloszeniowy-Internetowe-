@@ -40,10 +40,15 @@ if (isset($_POST['submit'])) {
             $error[] = 'Hasła nie są takie same!';
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-            $insert = "INSERT INTO konto(email, haslo, admin, firma) VALUES('$email','$hashedPassword','$admin','$firma')";
+            $zweryfikowany="NIE";
+            $insert = "INSERT INTO konto(email, haslo, admin, firma, zweryfikowany) VALUES('$email', '$hashedPassword', '$admin', '$firma', '$zweryfikowany')";
             mysqli_query($conn, $insert);
+            $lastInsertedId = mysqli_insert_id($conn);
 
+            $insertFirma = "INSERT INTO firma(konto_id) VALUES ('$lastInsertedId')";
+            mysqli_query($conn, $insertFirma);
+
+            
             $mail = new PHPMailer(true);
 
             try {
@@ -57,8 +62,8 @@ if (isset($_POST['submit'])) {
                 $mail->SMTPDebug = 2;
                 $mail->setFrom('projektofertypracy123545@outlook.com', 'Projekt Oferty Pracy');
                 $mail->addAddress($email);
-
                 $mail->isHTML(true);
+
                 $mail->Subject = 'Kod weryfikacyjny rejestracji';
                 $mail->Body = "Twój kod weryfikacyjny to: $kodWeryfikacyjny";
 
