@@ -208,24 +208,31 @@ $result = ($conn->query($sql))->fetch_array();
   </div>
   <hr class="announcement-separator">
   <?php
-              if(isset($_SESSION['id'])){
-                echo <<<html
-                
-                <input type='submit' class="aplicate-to-announcement" value="Aplikuj do tej oferty"></form>
-                html;
-              }
-              if(!isset($_SESSION['id'])){
-                echo <<<html
+  $sql = "SELECT *  FROM ogloszenie";
+  $resultt = ($conn->query($sql))->fetch_array();
 
-                <h1 class="text-danger">Aby móc aplikować do tej oferty zaloguj się lub zarejestruj!</h1>
-                html;
-              }
-          ?>
+  $sql="SELECT * FROM aplikacja WHERE id_uzytkownika='".$_SESSION['id']."' AND id_ogloszenia='".$resultt['id']."'";
+$return = $conn->query($sql);
+if ($return->num_rows == 0) {
+  if(isset($_SESSION['id'])){
+    echo <<<html
+    <form method='GET' action='aplikowanie_uzytkownika.php'>
+    <input type='hidden' value='$resultt[id]' name='idogloszenia'>
+    <input type='submit' class="aplicate-to-announcement" value="Aplikuj do tej oferty"></form>
+    html;
+  }}
+  else{
+    ?><h1 class="text-danger">Aplikowałeś już do tej oferty!</h1><?php
+  }
+if(!isset($_SESSION['id'])){
+  echo <<<html
+  <h1 class="text-danger">Aby móc aplikować do tej oferty zaloguj się lub zarejestruj!</h1>
+  html;
+}
+
+?>
 </div>
     </div>
-    
-
-
 </div>
   </div>
 </body>

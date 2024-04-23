@@ -160,6 +160,37 @@ html;
     } catch (PDOException $e) { 
         echo "Błąd połączenia z bazą danych: " . $e->getMessage();
     }
+    $conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
+
+    $query = "SELECT * FROM aplikacja";
+    $result = $conn->query($query);
+    echo "
+    
+      <table>";
+    while ($row = $result->fetch_array())
+    {
+      ?>
+      <form method='get' action = 'ZmienAplikowanie.php'>
+          <tr><input type='hidden' name = 'idAplikacji' value='<?php echo $row['id']; ?> ' > 
+          <td> 
+            <input type='text' name='user' value =' <?php echo $row['id_uzytkownika']; ?>'>
+          </td>
+          <td>
+              <input type = 'text' name='idogloszenia' value='<?php echo $row['id_ogloszenia'];?>'>
+            </td>
+              <td>
+                <input type = 'text' name='status' value='<?php echo $row['status']; ?>'>
+              </td>
+              <td>
+                <button name='change_status' type='submit'>zmien status</button></td><td><button name='delete' type='submit'>usun</button>
+              </td>
+            </tr>
+            </form>    
+      <?php
+    }
+    echo "</table>
+    ";
+
 ?>
 
 

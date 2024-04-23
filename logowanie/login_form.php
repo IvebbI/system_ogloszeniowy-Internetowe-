@@ -25,7 +25,6 @@ if(isset($_POST['submit'])){
                 $_SESSION['id'] =  $row['Id'];
                 $_SESSION['czyfirma'] = $row['firma'];
                 $_SESSION['czyadmin'] = $row['admin'];  
-                
 
                 // Sprawdzenie, czy użytkownik jest firmą
                 if ($_SESSION['czyfirma'] == 'TAK') {

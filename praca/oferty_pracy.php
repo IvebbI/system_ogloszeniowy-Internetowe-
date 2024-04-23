@@ -116,9 +116,87 @@ html;
 
 
 
+  <div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <form action="" method="GET" class="row g-3">
+                <div class="col-md-4">
+                    <label for="kategoria" class="form-label">Kategoria:</label>
+                    <select name="kategoria" class="form-select">
+                        <option value="">Wybierz kategorię</option>
+                        <?php
+                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
+                        $sql = "SELECT * FROM kategoria";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option>".$row['kategoria']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="poziomstanowiskaa" class="form-label">Poziom Stanowiska:</label>
+                    <select name="poziom_stanowiska" class="form-select">
+                        <option value="">Wybierz Poziom Stanowiska</option>
+                        <?php 
+                        $sql = "SELECT * FROM poziom_stanowiska";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option>".$row['poziom_stanowiska']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="rodzajumowy" class="form-label">Rodzaj Umowy:</label>
+                    <select name="rodzaj_umowy" class="form-select">
+                        <option value="">Wybierz rodzaj umowy</option>
+                        <?php 
+                        $sql = "SELECT * FROM rodzaj_umowy";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option>".$row['rodzaj_umowy']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="wymiarEtatu" class="form-label">Wymiar Etatu:</label>
+                    <select name="wymiar_etatu" class="form-select">
+                        <option value="">Wymiar etatu</option>
+                        <?php 
+                        $sql = "SELECT * FROM wymiar_etatu";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option>".$row['wymiar_etatu']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="rodzajPracy" class="form-label">Rodzaj Pracy:</label>
+                    <select name="rodzaj_pracy" class="form-select">
+                        <option value="">Wybierz rodzaj pracy</option>
+                        <?php 
+                        $sql = "SELECT * FROM rodzaj_pracy";
+                        $result = $conn->query($sql);
+                        while ($row = $result->fetch_assoc()) {
+                            echo "<option>".$row['rodzaj_pracy']."</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4" style="margin-top:45px;">
+                    <button type="submit" class="btn btn-primary">Filtruj</button>
+                    <a href="oferty_pracy.php" class="btn btn-secondary">Resetuj filtry</a>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+</div>
 
-
-    <?php
+<?php
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -130,9 +208,36 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-$sql = "SELECT ogloszenie.id,ogloszenie.nazwa,ogloszenie.wymiar_etatu,ogloszenie.widelki_wynagrodzenia,images.image,firma.adres,firma.nazwa_firmy  FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id
-LEFT JOIN konto ON firma.konto_id=konto.Id
-LEFT JOIN images ON konto.Id=images.id";
+$sql = "SELECT ogloszenie.id, ogloszenie.nazwa, ogloszenie.wymiar_etatu, ogloszenie.widelki_wynagrodzenia, images.image, firma.adres, firma.nazwa_firmy  
+        FROM ogloszenie 
+        JOIN firma ON ogloszenie.id_firmy = firma.id
+        LEFT JOIN konto ON firma.konto_id=konto.Id
+        LEFT JOIN images ON konto.Id=images.id";
+
+$whereClause = "";
+if(isset($_GET['kategoria']) && $_GET['kategoria'] != "") {
+    $whereClause .= " AND kategoria = '".$_GET['kategoria']."'";
+}
+
+if(isset($_GET['poziom_stanowiska']) && $_GET['poziom_stanowiska'] != "") {
+    $whereClause .= " AND poziom_stanowiska = '".$_GET['poziom_stanowiska']."'";
+}
+
+if(isset($_GET['rodzaj_umowy']) && $_GET['rodzaj_umowy'] != "") {
+    $whereClause .= " AND rodzaj_umowy = '".$_GET['rodzaj_umowy']."'";
+}
+
+if(isset($_GET['wymiar_etatu']) && $_GET['wymiar_etatu'] != "") {
+    $whereClause .= " AND wymiar_etatu = '".$_GET['wymiar_etatu']."'";
+}
+
+if(isset($_GET['rodzaj_pracy']) && $_GET['rodzaj_pracy'] != "") {
+    $whereClause .= " AND rodzaj_pracy = '".$_GET['rodzaj_pracy']."'";
+}
+if(!empty($whereClause)) {
+    $sql .= " WHERE 1 ".$whereClause;
+}
+
 $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
@@ -155,51 +260,45 @@ if ($result->num_rows > 0) {
 ?>
               
             <div class="col-12 col-sm-6 col-lg-4">
-            <a href="szczegolyoferty.php?id=<?php echo $row["id"]?>">
-                <div class="card mb-3">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
-                        <p class="offerts-cost">
-                          <span class="offerts-jobet">
-                          <?php echo $row['wymiar_etatu'];?></span>
-                          <span class="offerts-salary">Zarobki:
-                            <?php echo $row['widelki_wynagrodzenia']; ?></span>
-                        </p>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-5 col-sm-4">
-
-                               <?php
-                                  echo "<img src='data:image;base64,".base64_encode($row["image"])."' height='300px'>";
-                               ?>
-                                    <!-- <img src="data:image;base64," class="image-offerts img-fluid"> -->
-                                </div>
-                                <div class="col-7 col-sm-8">
-                                    <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?>
-                                  </span>
-                                 
-                                    <p class="adress-offerts">
-                                      <img src="../images/lokalizacjaikona.png" style="height:15px">
-                                        <?php echo $row['adres']; ?>
-                                        <span class="offerts-iconsave">
-                                    <img src="../images/saveicon.png" style="height:20px; margin-left:180px; margin-top:-50px">
-                                  </span>
-                                    </p>
+                <a href="szczegolyoferty.php?id=<?php echo $row["id"]?>">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
+                            <p class="offerts-cost">
+                                <span class="offerts-jobet">
+                                    <?php echo $row['wymiar_etatu'];?>
+                                </span>
+                                <span class="offerts-salary">Zarobki:
+                                    <?php echo $row['widelki_wynagrodzenia']; ?>
+                                </span>
+                            </p>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-5 col-sm-4">
+                                        <?php
+                                            echo "<img src='data:image;base64,".base64_encode($row["image"])."' height='300px'>";
+                                        ?>
+                                    </div>
+                                    <div class="col-7 col-sm-8">
+                                        <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?></span>
+                                        <p class="adress-offerts">
+                                            <img src="../images/lokalizacjaikona.png" style="height:15px">
+                                            <?php echo $row['adres']; ?>
+                                            <span class="offerts-iconsave">
+                                                <img src="../images/saveicon.png" style="height:20px; margin-left:180px; margin-top:-50px">
+                                            </span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-      </a>
+                </a>
             </div>
-      
-      
-      
 <?php
         $counter++;
     }
 ?>
-
         </div>
     </div>
 <?php
