@@ -1,8 +1,32 @@
 <?php
-  session_start();
+session_start();
 
- 
+// Sprawdź, czy przekazano parametr "id" w adresie URL
+if(isset($_GET['id'])){
+    $id_ogloszenia = $_GET['id'];
+
+    // Połącz z bazą danych
+    $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
+
+    // Sprawdź, czy istnieje rekord dla tego ogłoszenia w tabeli popularne_oferty
+    $check_query = "SELECT * FROM popularne_oferty WHERE id_oferty = $id_ogloszenia";
+    $result = $conn->query($check_query);
+
+    if ($result && $result->num_rows > 0) {
+        // Jeśli rekord istnieje, zaktualizuj liczbę odsłon
+        $update_query = "UPDATE popularne_oferty SET ilosc_odslon = ilosc_odslon + 1 WHERE id_oferty = $id_ogloszenia";
+        $conn->query($update_query);
+    } else {
+        // Jeśli rekord nie istnieje, dodaj nowy rekord z liczbą odsłon równą 1
+        $insert_query = "INSERT INTO popularne_oferty (id_oferty, ilosc_odslon) VALUES ($id_ogloszenia, 1)";
+        $conn->query($insert_query);
+    }
+} else {
+    // Jeśli brakuje parametru "id" w adresie URL, możesz obsłużyć ten przypadek odpowiednio
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -208,29 +232,35 @@ $result = ($conn->query($sql))->fetch_array();
   </div>
   <hr class="announcement-separator">
   <?php
-  $sql = "SELECT *  FROM ogloszenie";
-  $resultt = ($conn->query($sql))->fetch_array();
+// Pobierz identyfikator oferty pracy przekazany przez formularz lub stronę
+$id_oferty = $_GET['id'];
 
-  $sql="SELECT * FROM aplikacja WHERE id_uzytkownika='".$_SESSION['id']."' AND id_ogloszenia='".$resultt['id']."'";
-$return = $conn->query($sql);
-if ($return->num_rows == 0) {
-  if(isset($_SESSION['id'])){
+// Sprawdź, czy użytkownik jest zalogowany
+if(isset($_SESSION['id'])){
+    // Użyj identyfikatora oferty pracy w zapytaniu SQL, aby sprawdzić, czy użytkownik już aplikował
+    $sql = "SELECT * FROM aplikacja WHERE id_uzytkownika='".$_SESSION['id']."' AND id_ogloszenia='$id_oferty'";
+    $result = $conn->query($sql);
+
+    // Sprawdź, czy wynik zapytania zawiera jakieś rekordy
+    if ($result->num_rows == 0) {
+        // Jeśli użytkownik jeszcze nie aplikował do tej oferty, wyświetl formularz aplikacyjny
+        echo <<<html
+        <form method='GET' action='aplikowanie_uzytkownika.php'>
+        <input type='hidden' value='$id_oferty' name='idogloszenia'>
+        <input type='submit' class="aplicate-to-announcement" value="Aplikuj do tej oferty"></form>
+        html;
+    } else {
+        // Jeśli użytkownik już aplikował do tej oferty, wyświetl odpowiedni komunikat
+        ?><h1 class="text-danger">Aplikowałeś już do tej oferty!</h1><?php
+    }
+} else {
+    // Jeśli użytkownik nie jest zalogowany, wyświetl komunikat zachęcający do zalogowania się lub zarejestrowania
     echo <<<html
-    <form method='GET' action='aplikowanie_uzytkownika.php'>
-    <input type='hidden' value='$resultt[id]' name='idogloszenia'>
-    <input type='submit' class="aplicate-to-announcement" value="Aplikuj do tej oferty"></form>
+    <h1 class="text-danger">Aby móc aplikować do tej oferty zaloguj się lub zarejestruj!</h1>
     html;
-  }}
-  else{
-    ?><h1 class="text-danger">Aplikowałeś już do tej oferty!</h1><?php
-  }
-if(!isset($_SESSION['id'])){
-  echo <<<html
-  <h1 class="text-danger">Aby móc aplikować do tej oferty zaloguj się lub zarejestruj!</h1>
-  html;
 }
-
 ?>
+
 </div>
     </div>
 </div>

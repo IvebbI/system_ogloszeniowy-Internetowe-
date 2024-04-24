@@ -188,7 +188,7 @@ html;
                 </div>
                 <div class="col-md-4" style="margin-top:45px;">
                     <button type="submit" class="btn btn-primary">Filtruj</button>
-                    <a href="oferty_pracy.php" class="btn btn-secondary">Resetuj filtry</a>
+                    <a href="oferty_pracy.php" class="btn btn-dangerx">Resetuj filtry</a>
                 </div>
                 
             </form>

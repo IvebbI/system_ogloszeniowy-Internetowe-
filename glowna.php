@@ -235,62 +235,96 @@ html;
 					<p>Zobacz najpopularniejsze oferty pracy w tym miesiącu</p>
 				</div>
 
- <?php
+        <?php
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "baza_systemogloszeniowy";
 
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-$sql = "SELECT ogloszenie.*, firma.* FROM ogloszenie JOIN firma ON ogloszenie.id_firmy = firma.id";
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Zapytanie SQL do pobrania danych o ofertach pracy z tabeli popularne_oferty
+$sql = "SELECT ogloszenie.id, ogloszenie.nazwa, ogloszenie.wymiar_etatu, ogloszenie.widelki_wynagrodzenia, images.image, firma.adres, firma.nazwa_firmy  
+        FROM popularne_oferty 
+        JOIN ogloszenie ON popularne_oferty.id_oferty = ogloszenie.id
+        JOIN firma ON ogloszenie.id_firmy = firma.id
+        LEFT JOIN konto ON firma.konto_id=konto.Id
+        LEFT JOIN images ON konto.Id=images.id";
+
 $result = $conn->query($sql);
 
-$counter = 0;
-
 if ($result->num_rows > 0) {
-  ?>
-  <div class="card-columns d-flex flex-wrap">
-    <?php
+    $counter = 0; 
+?>
+  
+    <div class="container">
+        <div class="row">
+<?php
     while ($row = $result->fetch_assoc()) {
-      if ($counter < 4) {
-        ?>
-        <div class="card" style="width: 18rem;">
-   
-
-          <div class="card-body">
-            <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
-            <p class="card-text">
-
-            </p>
-            <?php
-          if (isset($row['logo_url']) && !empty($row['logo_url'])) {
-            ?>
-                        <div class="col-5 col-sm-3">
-                                    <img src="<?php echo $row['logo_url']; ?>" class="image-offerts img-fluid">
-                                </div>  
-          <?php
-          }
-          ?>
-
-            <span class="card-text">
-              <?php echo $row['nazwa_firmy']; ?>              <span class="widelki-wynagrodzenia"><?php echo $row['widelki_wynagrodzenia']; ?></span></div>
-              <div class="adres-firmy">
-              <?php echo $row['adres']; ?>  
-            </p>
-            <button class="szczegoly-ofert-glowna">
-								czytaj więcej
-								</button>
-          </div>
+        if ($counter > 0 && $counter % 3 === 0) {
+          
+?>
+            </div>
         </div>
-        <?php
+        <div class="container">
+            <div class="row">
+<?php
+        }
+?>
+              
+            <div class="col-12 col-sm-6 col-lg-4">
+                <a href="praca/szczegolyoferty.php?id=<?php echo $row["id"]?>">
+                    <div class="card mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
+                            <p class="offerts-cost">
+                                <span class="offerts-jobet">
+                                    <?php echo $row['wymiar_etatu'];?>
+                                </span>
+                                <span class="offerts-salary">Zarobki:
+                                    <?php echo $row['widelki_wynagrodzenia']; ?>
+                                </span>
+                            </p>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-5 col-sm-4">
+                                        <?php
+                                            echo "<img src='data:image;base64,".base64_encode($row["image"])."' height='300px'>";
+                                        ?>
+                                    </div>
+                                    <div class="col-7 col-sm-8">
+                                        <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?></span>
+                                        <p class="adress-offerts">
+                                            <img src="../images/lokalizacjaikona.png" style="height:15px">
+                                            <?php echo $row['adres']; ?>
+                                            <span class="offerts-iconsave">
+                                                <img src="../images/saveicon.png" style="height:20px; margin-left:180px; margin-top:-50px">
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+<?php
         $counter++;
-      }
     }
-    ?>
-  </div>
-  </div>
-  <?php
+?>
+        </div>
+    </div></div>
+<?php
 } else {
-  echo "Brak wyników";
+    echo "Brak wyników";
 }
 $conn->close();
-?> 
+?>
+
 
 
 
