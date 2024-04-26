@@ -104,12 +104,12 @@ html;
   }
   if (!isset($_SESSION['id'])) {
     echo <<<html
-        <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
+        <a href="../logowanie/login_form.php" class="nav-link custom-link me-2">
             Zaloguj się
         </a>
     html;
     echo <<<html
-    <a href="/system_ogloszeniowy-Internetowe-/logowanie/register_form.php" class="zarejestruj-btn nav-link custom-link me-2">
+    <a href="../logowanie/register_form.php" class="zarejestruj-btn nav-link custom-link me-2">
         Zarejestruj się
     </a>
   html;
@@ -118,7 +118,7 @@ html;
 
     echo <<<html
 <li class="nav-item">
-  <a href="/system_ogloszeniowy-Internetowe-/logowanie/logout.php" class="nav-link custom-link me-2">
+  <a href="../logowanie/logout.php" class="nav-link custom-link me-2">
     Wyloguj się
   </a>
 </li>

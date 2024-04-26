@@ -583,6 +583,6 @@ if (isset($_POST['poziomjezyka'])) {
     }
     $conn->commit();
 }
-header('location:/system_ogloszeniowy-Internetowe-/uzytkownik/profil.php');
+header('location:profil.php');
 $conn->close();
 ?>

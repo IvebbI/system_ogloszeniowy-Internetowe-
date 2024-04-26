@@ -123,12 +123,12 @@ html;
   <?php
 if (!isset($_SESSION['id'])) {
   echo <<<html
-      <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="login-btn me-2">
+      <a href="logowanie/login_form.php" class="login-btn me-2">
           Zaloguj się
       </a>
   html;
   echo <<<html
-  <a href="/system_ogloszeniowy-Internetowe-/logowanie/register_form.php" class="zarejestruj-btn register-btn me-2">
+  <a href="/logowanie/register_form.php" class="zarejestruj-btn register-btn me-2">
       Zarejestruj się
   </a>
 html;

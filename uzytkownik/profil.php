@@ -6,7 +6,7 @@ session_start();
 
 @include '../config.php';
 if(!isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])){
-  header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
+  header('location:../glowna.php');
 }
 
 if (isset($_SESSION['id'])) {
@@ -41,7 +41,7 @@ if (isset($_SESSION['id'])) {
     echo "Brak sesji użytkownika.";
 }
 
-$conn->close();
+
 ?>
 
 <!DOCTYPE html>
@@ -120,7 +120,7 @@ $conn->close();
               }
               if (!isset($_SESSION['id'])) {
                 echo <<<html
-                    <a href="/system_ogloszeniowy-Internetowe-/logowanie/login_form.php" class="nav-link custom-link me-2">
+                    <a href="/logowanie/login_form.php" class="nav-link custom-link me-2">
                         Zaloguj się
                     </a>
                 html;
@@ -144,7 +144,6 @@ $conn->close();
 
 
 <?php
-include '../logowanie/config.php';
 if($_SESSION['czyfirma']=='TAK'){
   ?>
   <div class="row">
