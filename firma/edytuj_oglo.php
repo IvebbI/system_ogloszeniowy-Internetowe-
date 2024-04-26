@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
+@include '../config.php';
 $sql = "UPDATE `ogloszenie` SET `nazwa`='".$_GET['nazwaogloszenia']."',
 `poziom_stanowiska`='".$_GET['poziomstanowiska']."',`rodzaj_umowy`='".$_GET['rodzajumowyy']."',`wymiar_etatu`='".$_GET['wymiaretatuu']."',`rodzaj_pracy`='".$_GET['rodzajpracyy']."',
 `widelki_wynagrodzenia`='".$_GET['wynagrodzenie']."',`dni_pracy`='".$_GET['dnipracyod']."-".$_GET['dnipracydo']."',`godziny_pracy`='".$_GET['godzinypracyod']."-".$_GET['godzinypracydo']."',`data_waznosci`='".$_GET['datawaznosci']."',

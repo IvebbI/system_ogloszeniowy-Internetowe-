@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
+@include '../config.php';
     $sql = "SELECT * FROM `images` WHERE `id` = " . $_SESSION["id"];
     $result = mysqli_query($conn, $sql);
     if (mysqli_num_rows($result) == 0)

@@ -1,12 +1,6 @@
 <?php
 session_start();
-echo"<pre>";
-print_r($_POST);
-echo"</pre>";
-
-
-
-include '../logowanie/config.php';
+@include '../config.php';
 if (isset($_SESSION['id'])) {
     $userId = $_SESSION['id'];
 
@@ -193,7 +187,6 @@ if (isset($_POST['miejscezamieszkania'])) {
     $conn->commit();
 }
 
-//doswiadczenie
 if (isset($_POST['stanowisko'])) {
     $dana = $conn->real_escape_string($_POST['stanowisko']);
 

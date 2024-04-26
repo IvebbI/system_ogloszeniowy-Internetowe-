@@ -1,11 +1,6 @@
 <?php
   session_start();
-  $servername = "localhost";
-  $username = "root";
-  $password = "";
-  $dbname = "baza_systemogloszeniowy";
-  
-  $conn = new mysqli($servername, $username, $password, $dbname);
+  @include 'config.php';
   
   if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
@@ -236,12 +231,6 @@ html;
 				</div>
 
         <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "baza_systemogloszeniowy";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

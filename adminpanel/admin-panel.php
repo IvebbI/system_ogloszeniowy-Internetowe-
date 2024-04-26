@@ -1,5 +1,6 @@
 <?php
 session_start();
+@include '../config.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -117,12 +118,8 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
           
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
@@ -137,23 +134,14 @@ html;
                 <td><input type='text' name='nazwa' value='{$row['email']}' style='width:720px'>
                 </input><input type='hidden' name='id' value = '{$row['Id']}'>
                 <input type='hidden' name='tabela' value = 'konto']}'></td><td>
-                <input type='submit' name='edit' value='Edytuj'>
                 <input type='submit' name='delete' value='Usun'>
                 </form></td></tr>";
             }
             echo "</table>";
-            
-            $pdo = null;
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
-
-        <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
-            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
-            <input type="submit" value="Dodaj">
-        </form>
       </div>
     </div>
      <!-- Tabela Wymiar Etatu  -->
@@ -161,14 +149,10 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
           
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             $query = "SELECT * FROM wymiar_etatu";
             
@@ -186,15 +170,13 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-            
-            $pdo = null;
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
 
         <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
+          <input type="hidden" value="wymiar_etatu" name="kategoria">
             Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
             <input type="submit" value="Dodaj">
         </form>
@@ -205,12 +187,8 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
           
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
@@ -231,7 +209,6 @@ html;
             }
             echo "</table>";
             
-            $pdo = null;
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
@@ -249,12 +226,8 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
           
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
@@ -275,14 +248,14 @@ html;
             }
             echo "</table>";
             
-            $pdo = null;
+            
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
 
         <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
+          <input type="hidden" value="poziom_stanowiska" name="kategoria">
             Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
             <input type="submit" value="Dodaj">
         </form>
@@ -293,13 +266,8 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
-          
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             $query = "SELECT * FROM rodzaj_umowy";
@@ -319,14 +287,14 @@ html;
             }
             echo "</table>";
             
-            $pdo = null;
+           
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
 
         <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
+          <input type="hidden" value="rodzaj_umowy" name="kategoria">
             Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
             <input type="submit" value="Dodaj">
         </form>
@@ -337,12 +305,8 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
-        
+
         try {
-            $pdo = new PDO($dsn, $username, $password);
           
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
@@ -363,14 +327,13 @@ html;
             }
             echo "</table>";
             
-            $pdo = null;
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
 
         <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
+          <input type="hidden" value="wymiar_etatu" name="kategoria">
             Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
             <input type="submit" value="Dodaj">
         </form>
@@ -381,13 +344,8 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
-          
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
             $query = "SELECT * FROM rodzaj_pracy";
@@ -407,14 +365,14 @@ html;
             }
             echo "</table>";
             
-            $pdo = null;
+           
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
 
         <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
+          <input type="hidden" value="rodzaj_pracy" name="kategoria">
             Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
             <input type="submit" value="Dodaj">
         </form>
@@ -425,12 +383,9 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
+
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
           
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
@@ -451,14 +406,14 @@ html;
             }
             echo "</table>";
             
-            $pdo = null;
+           
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
 
         <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
+          <input type="hidden" value="dni_pracy" name="kategoria">
             Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
             <input type="submit" value="Dodaj">
         </form>
@@ -469,12 +424,10 @@ html;
     <div class="tables-container">
       <div class="table-wrapper">
         <?php
-        $dsn = 'mysql:host=localhost;dbname=baza_systemogloszeniowy';
-        $username = 'root';
-        $password = '';
+     
         
         try {
-            $pdo = new PDO($dsn, $username, $password);
+
           
             $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             
@@ -495,14 +448,14 @@ html;
             }
             echo "</table>";
             
-            $pdo = null;
+
         } catch (PDOException $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
 
         <form method="GET" action="dodaj_dana.php">
-          <input type="hidden" value="kategoria" name="kategoria">
+          <input type="hidden" value="godziny_pracy" name="kategoria">
             Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
             <input type="submit" value="Dodaj">
         </form>

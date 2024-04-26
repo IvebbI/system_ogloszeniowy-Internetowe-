@@ -4,7 +4,7 @@ session_start();
 
 
 
-include '../logowanie/config.php';
+@include '../config.php';
 if(!isset($_SESSION['id']) || !isset($_SESSION['czyadmin'])){
   header('location:/system_ogloszeniowy-Internetowe-/glowna.php');
 }
@@ -41,7 +41,6 @@ if (isset($_SESSION['id'])) {
     echo "Brak sesji użytkownika.";
 }
 
-// Zamykanie połączenia z bazą danych po zakończeniu operacji
 $conn->close();
 ?>
 
@@ -162,7 +161,6 @@ if($_SESSION['czyfirma']=='TAK'){
               
        
                  
-    $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
     $sql = "SELECT id, name, image FROM `images` WHERE id=$_SESSION[id]";
     $result = mysqli_query($conn, $sql);
      
@@ -222,7 +220,6 @@ if (isset($_SESSION['id'])) {
     echo "Brak sesji użytkownika.";
 }
 
-// Zamykanie połączenia z bazą danych po zakończeniu operacji
 $conn->close();
                       ?>
                       <form action="edytuj-firme.php" method="POST">
@@ -283,7 +280,6 @@ $conn->close();
               
        
                  
-    $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
     $sql = "SELECT id, name, image FROM `images` WHERE id=$_SESSION[id]";
     $result = mysqli_query($conn, $sql);
      

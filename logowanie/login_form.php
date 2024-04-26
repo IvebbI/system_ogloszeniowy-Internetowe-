@@ -1,6 +1,6 @@
 <?php
 
-@include 'config.php';
+@include '../config.php';
 
 session_start();
 
@@ -20,13 +20,11 @@ if(isset($_POST['submit'])){
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
 
-            // Sprawdzenie zahashowanego hasła
             if (password_verify($_POST['password'], $row['haslo'])) {
                 $_SESSION['id'] =  $row['Id'];
                 $_SESSION['czyfirma'] = $row['firma'];
                 $_SESSION['czyadmin'] = $row['admin'];  
 
-                // Sprawdzenie, czy użytkownik jest firmą
                 if ($_SESSION['czyfirma'] == 'TAK') {
                     $sql = "SELECT * FROM firma WHERE konto_id = {$_SESSION['id']}";
                     $return = $conn->query($sql);

@@ -1,7 +1,6 @@
 <?php
 session_start();
-
-$conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
+@include '../config.php';
 
 $image = $_FILES["image"];
 $info = getimagesize($image["tmp_name"]);

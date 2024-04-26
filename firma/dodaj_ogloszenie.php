@@ -1,6 +1,6 @@
 <?php
   session_start();
-
+  @include '../config.php';
  
 ?>
 <!DOCTYPE html>
@@ -135,7 +135,6 @@ html;
                 <label for="kategoria" class="form-label">Kategoria:</label>
                 <select name="kategoriao" class="form-select" require>
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM kategoria";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {

@@ -4,7 +4,7 @@ session_start();
 
 
 
-include '../logowanie/config.php';
+@include '../config.php';
 if (isset($_SESSION['firmaID'])) {
     $userId = $_SESSION['id'];
     $firmaId=$_SESSION['firmaID'];
@@ -187,7 +187,6 @@ if (isset($_POST['miejscezamieszkania'])) {
     $conn->commit();
 }
 
-//doswiadczenie
 if (isset($_POST['stanowisko'])) {
     $dana = $conn->real_escape_string($_POST['stanowisko']);
 

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
+@include '../config.php';
 if(isset($_GET['delete']))
 {
     $sql = "DELETE FROM `aplikacja` where id = ".$_GET['idAplikacji'];

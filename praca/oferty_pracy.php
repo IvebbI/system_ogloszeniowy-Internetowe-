@@ -1,6 +1,6 @@
 <?php
   session_start();
-
+  @include '../config.php';
  
 ?>
 <!DOCTYPE html>
@@ -125,7 +125,6 @@ html;
                     <select name="kategoria" class="form-select">
                         <option value="">Wybierz kategorię</option>
                         <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM kategoria";
                         $result = $conn->query($sql);
                         while ($row = $result->fetch_assoc()) {
@@ -197,12 +196,6 @@ html;
 </div>
 
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "baza_systemogloszeniowy";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);

@@ -1,5 +1,5 @@
 <?php
-@include 'config.php';
+@include '../config.php';
 require 'SMTP.php';
 require 'PHPMailer.php';
 require 'Exception.php';

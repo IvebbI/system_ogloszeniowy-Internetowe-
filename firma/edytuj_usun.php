@@ -1,8 +1,8 @@
 <?php
 session_start();
+@include '../config.php';
 if($_GET['edit'] != "")
 {
-    $conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
 
     $query = "SELECT * FROM ogloszenie WHERE id=".$_GET['id'];
     $result = ($conn->query($query))->fetch_array();
@@ -21,7 +21,6 @@ if($_GET['edit'] != "")
                 <label for="kategoria" class="form-label" style="width:500px;margin-left:15px">Kategoria:</label>
                 <select name="kategoriao" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM kategoria";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -38,7 +37,6 @@ if($_GET['edit'] != "")
                 <label for="kategoria" class="form-label" style="width:500px;margin-left:15px">Poziom Stanowiska:</label>
                 <select name="poziomstanowiska" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM poziom_stanowiska";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -55,7 +53,6 @@ if($_GET['edit'] != "")
                 <label for="rodzajumowy" class="form-label" style="width:500px;margin-left:15px">Rodzaj Umowy:</label>
                 <select name="rodzajumowyy" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM rodzaj_umowy";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -72,7 +69,6 @@ if($_GET['edit'] != "")
                 <label for="rodzajumowy" class="form-label" style="width:500px;margin-left:15px">Wymiar Etatu:</label>
                 <select name="wymiaretatuu" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM wymiar_etatu";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -89,7 +85,6 @@ if($_GET['edit'] != "")
                 <label for="rodzajumowy" class="form-label" style="width:500px;margin-left:15px">Rodzaj Pracy:</label>
                 <select name="rodzajpracyy" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM rodzaj_pracy";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -108,7 +103,6 @@ if($_GET['edit'] != "")
                 <label for="dnipracyod" class="form-label" style="width:500px;margin-left:15px">Dni pracy od:</label>
                 <select name="dnipracyod" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM dni_pracy";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -125,7 +119,6 @@ if($_GET['edit'] != "")
                 <label for="dnipracydo" class="form-label" style="width:500px;margin-left:15px">Dni pracy do:</label>
                 <select name="dnipracydo" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM dni_pracy";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -142,7 +135,6 @@ if($_GET['edit'] != "")
                 <label for="godzinypracyod" class="form-label" style="width:500px;margin-left:15px">Godziny Pracy od:</label>
                 <select name="godzinypracyod" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM godziny_pracy";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -157,7 +149,6 @@ if($_GET['edit'] != "")
                 <label for="godzinypracydo" class="form-label" style="width:500px;margin-left:15px">Godziny Pracy do:</label>
                 <select name="godzinypracydo" class="form-select" require style="width:500px;margin-left:15px">
                     <?php
-                        $conn = mysqli_connect("localhost", "root", "", "baza_systemogloszeniowy");
                         $sql = "SELECT * FROM godziny_pracy";
                         $resultt = $conn->query($sql);
                         while ($row = $resultt->fetch_assoc()) {
@@ -172,7 +163,6 @@ if($_GET['edit'] != "")
                     ?>
                 </select>
                 <?php
-                 $conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
 
                  $query = "SELECT * FROM ogloszenie WHERE id=".$_GET['id'];
                  $result = ($conn->query($query))->fetch_array();
@@ -208,7 +198,6 @@ if($_GET['edit'] != "")
 }
 else if ($_GET['delete'] != "")
 {
-    $conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
 
     $query = "DELETE FROM `".$_GET['tabela'] ."` WHERE id = ". $_GET['id'];
     $result = $conn->query($query);

@@ -1,5 +1,6 @@
 <?php
   session_start();
+  @include '../config.php';
 
  
 ?>
@@ -160,7 +161,6 @@ html;
     } catch (PDOException $e) { 
         echo "Błąd połączenia z bazą danych: " . $e->getMessage();
     }
-    $conn = mysqli_connect('localhost','root','','baza_systemogloszeniowy');
 
     $query = "SELECT * FROM aplikacja";
     $result = $conn->query($query);
