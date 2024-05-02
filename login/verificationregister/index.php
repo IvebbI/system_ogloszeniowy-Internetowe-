@@ -18,13 +18,11 @@ if (isset($_POST['submit'])) {
             $result_select = mysqli_query($conn, $select);
             if ($result_select) {
                 $userData = mysqli_fetch_assoc($result_select);
-                $_SESSION['id'] =  $userData['id'];
                 $_SESSION['czyfirma'] = $firma;
                 $_SESSION['czyadmin'] = $admin;
                 session_destroy();
 
-                header('location:../../main/');
-                exit;
+                //  header('location:../../main/');
             } else {
                 $error[] = 'Błąd podczas pobierania danych z bazy: ' . mysqli_error($conn);
             }

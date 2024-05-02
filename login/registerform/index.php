@@ -30,25 +30,31 @@ if (isset($_POST['submit'])) {
         'verification_code' => $kodWeryfikacyjny,
     ];
 
-    $select = "SELECT * FROM konto WHERE email = '$email'";
-    $result = mysqli_query($conn, $select);
+    $select = "SELECT * FROM konto WHERE email = ?";
+    $stmt = $conn->prepare($select);
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-    if (mysqli_num_rows($result) > 0) {
+    if ($result->num_rows > 0) {
         $error[] = 'Na tym mailu jest już założone konto!';
     } else {
         if ($password != $confirmPassword) {
             $error[] = 'Hasła nie są takie same!';
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-            $zweryfikowany="NIE";
-            $insert = "INSERT INTO konto(email, haslo, admin, firma, zweryfikowany) VALUES('$email', '$hashedPassword', '$admin', '$firma', '$zweryfikowany')";
-            mysqli_query($conn, $insert);
-            $lastInsertedId = mysqli_insert_id($conn);
+            $zweryfikowany = "NIE";
+            $insert = "INSERT INTO konto(email, haslo, admin, firma, zweryfikowany) VALUES(?, ?, ?, ?, ?)";
+            $stmt = $conn->prepare($insert);
+            $stmt->bind_param("sssss", $email, $hashedPassword, $admin, $firma, $zweryfikowany);
+            $stmt->execute();
+            $lastInsertedId = $stmt->insert_id;
 
-            $insertFirma = "INSERT INTO firma(konto_id) VALUES ('$lastInsertedId')";
-            mysqli_query($conn, $insertFirma);
+            $insertFirma = "INSERT INTO firma(konto_id) VALUES (?)";
+            $stmt = $conn->prepare($insertFirma);
+            $stmt->bind_param("i", $lastInsertedId);
+            $stmt->execute();
 
-            
             $mail = new PHPMailer(true);
 
             try {
@@ -86,7 +92,7 @@ if (isset($_POST['submit'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style-logowanie.css">
+    <link rel="stylesheet" href="../loginstyle/style.css">
 </head>
 
 <body>
@@ -117,7 +123,7 @@ if (isset($_POST['submit'])) {
             </div>
 
             <input type="submit" value="Zarejestruj się!" class="form-btn" name="submit">
-            <p>Masz już konto? <a href="login_form.php">Zaloguj się!</a></p>
+            <p>Masz już konto? <a href="../loginform/">Zaloguj się!</a></p>
         </form>
     </div>
 </body>

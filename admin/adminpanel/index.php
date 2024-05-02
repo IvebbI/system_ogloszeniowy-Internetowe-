@@ -117,18 +117,22 @@ html;
                   <h1><center>Tabela do zarządzania Użytkownikami:</center></h1>
     <div class="tables-container">
       <div class="table-wrapper">
-        <?php
+      <?php
         
         try {
           
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM konto";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
             echo "<tr><th>ID</th><th>Nazwa Użytkownika</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['Id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['email']}' style='width:720px'>
@@ -138,7 +142,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
@@ -152,14 +156,18 @@ html;
         
         try {
           
-          $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM wymiar_etatu";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
             echo "<tr><th>ID</th><th>Wymiar Etatu</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['wymiar_etatu']}' style='width:720px'>
@@ -170,7 +178,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
@@ -186,18 +194,22 @@ html;
     <h1><center>Tabela kategorie:</center></h1>
     <div class="tables-container">
       <div class="table-wrapper">
-        <?php
+      <?php
         
         try {
           
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM kategoria";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
             echo "<tr><th>ID</th><th>Kategoria</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['kategoria']}' style='width:720px'>
@@ -208,8 +220,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-            
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
@@ -225,18 +236,22 @@ html;
       <h1><center>Tabela Poziom Stanowiska:</center></h1>
     <div class="tables-container">
       <div class="table-wrapper">
-        <?php
+      <?php
         
         try {
           
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM poziom_stanowiska";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
             echo "<tr><th>ID</th><th>Poziom Stanowiska</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['poziom_stanowiska']}' style='width:720px'>
@@ -247,9 +262,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-            
-            
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
@@ -265,17 +278,22 @@ html;
      <h1><center>Tabela Rodzaj Umowy:</center></h1>
     <div class="tables-container">
       <div class="table-wrapper">
-        <?php
+      <?php
         
         try {
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          
+
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM rodzaj_umowy";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
             echo "<tr><th>ID</th><th>Rodzaj Umowy</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['rodzaj_umowy']}' style='width:720px'>
@@ -286,9 +304,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-            
-           
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
@@ -300,60 +316,26 @@ html;
         </form>
       </div>
     </div>
-     <!-- Tabela Wymiar Etatu  -->
-     <h1><center>Tabela Wymiar Etatu:</center></h1>
-    <div class="tables-container">
-      <div class="table-wrapper">
-        <?php
-
-        try {
-          
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            
-            $query = "SELECT * FROM wymiar_etatu";
-            
-            $stmt = $pdo->query($query);
-            echo "<table>";
-            echo "<tr><th>ID</th><th>Wymiar Etatu</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                echo "<tr><td>{$row['id']}</td>
-                <form method='GET' action='../editdelete'>
-                <td><input type='text' name='nazwa' value='{$row['wymiar_etatu']}' style='width:720px'>
-                </input><input type='hidden' name='id' value = '{$row['id']}'>
-                <input type='hidden' name='tabela' value = 'wymiar_etatu']}'></td><td>
-                <input type='submit' name='edit' value='Edytuj'>
-                <input type='submit' name='delete' value='Usun'>
-                </form></td></tr>";
-            }
-            echo "</table>";
-            
-        } catch (PDOException $e) { 
-            echo "Błąd połączenia z bazą danych: " . $e->getMessage();
-        }
-        ?>
-
-        <form method="GET" action="../add">
-          <input type="hidden" value="wymiar_etatu" name="kategoria">
-            Dodaj nową kategorię: <input type="text" name="valuekategoria" required>
-            <input type="submit" value="Dodaj">
-        </form>
-      </div>
-    </div>
      <!-- Tabela Rodzaj Pracy  -->
      <h1><center>Tabela Rodzaj Pracy:</center></h1>
     <div class="tables-container">
       <div class="table-wrapper">
-        <?php
+      <?php
         
         try {
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+          
+
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM rodzaj_pracy";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
             echo "<tr><th>ID</th><th>Rodzaj Pracy</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['rodzaj_pracy']}' style='width:720px'>
@@ -364,9 +346,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-            
-           
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
@@ -382,19 +362,22 @@ html;
     <h1><center>Tabela Dni Pracy:</center></h1>
     <div class="tables-container">
       <div class="table-wrapper">
-        <?php
-
+      <?php
         
         try {
           
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM dni_pracy";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
-            echo "<tr><th>ID</th><th>Dni Pracy</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr><th>ID</th><th>Dni pracy</th><th>Akcja</th></tr>";
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['dni_pracy']}' style='width:720px'>
@@ -405,9 +388,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-            
-           
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>
@@ -423,20 +404,22 @@ html;
     <h1><center>Tabela Godziny Pracy:</center></h1>
     <div class="tables-container">
       <div class="table-wrapper">
-        <?php
-     
+      <?php
         
         try {
-
           
-            $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+            
+            if ($conn->connect_error) {
+                die("Connection failed: " . $conn->connect_error);
+            }
             
             $query = "SELECT * FROM godziny_pracy";
             
-            $stmt = $pdo->query($query);
+            $result = $conn->query($query);
             echo "<table>";
-            echo "<tr><th>ID</th><th>Godziny Pracy</th><th>Akcja</th></tr>";
-            while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            echo "<tr><th>ID</th><th>Godziny pracy</th><th>Akcja</th></tr>";
+            while ($row = $result->fetch_assoc()) {
                 echo "<tr><td>{$row['id']}</td>
                 <form method='GET' action='../editdelete'>
                 <td><input type='text' name='nazwa' value='{$row['godziny_pracy']}' style='width:720px'>
@@ -447,9 +430,7 @@ html;
                 </form></td></tr>";
             }
             echo "</table>";
-            
-
-        } catch (PDOException $e) { 
+        } catch (Exception $e) { 
             echo "Błąd połączenia z bazą danych: " . $e->getMessage();
         }
         ?>

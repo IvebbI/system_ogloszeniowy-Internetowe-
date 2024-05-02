@@ -231,88 +231,90 @@ html;
 				</div>
 
         <?php
+try {
+    $dbh = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
+    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    $sql = "SELECT ogloszenie.id, ogloszenie.nazwa, ogloszenie.wymiar_etatu, ogloszenie.widelki_wynagrodzenia, images.image, firma.adres, firma.nazwa_firmy  
+            FROM popularne_oferty 
+            JOIN ogloszenie ON popularne_oferty.id_oferty = ogloszenie.id
+            JOIN firma ON ogloszenie.id_firmy = firma.id
+            LEFT JOIN konto ON firma.konto_id=konto.Id
+            LEFT JOIN images ON konto.Id=images.id";
 
-// Zapytanie SQL do pobrania danych o ofertach pracy z tabeli popularne_oferty
-$sql = "SELECT ogloszenie.id, ogloszenie.nazwa, ogloszenie.wymiar_etatu, ogloszenie.widelki_wynagrodzenia, images.image, firma.adres, firma.nazwa_firmy  
-        FROM popularne_oferty 
-        JOIN ogloszenie ON popularne_oferty.id_oferty = ogloszenie.id
-        JOIN firma ON ogloszenie.id_firmy = firma.id
-        LEFT JOIN konto ON firma.konto_id=konto.Id
-        LEFT JOIN images ON konto.Id=images.id";
+    $stmt = $dbh->query($sql);
 
-$result = $conn->query($sql);
-
-if ($result->num_rows > 0) {
-    $counter = 0; 
+    if ($stmt->rowCount() > 0) {
+        $counter = 0; 
 ?>
   
-    <div class="container">
-        <div class="row">
-<?php
-    while ($row = $result->fetch_assoc()) {
-        if ($counter > 0 && $counter % 3 === 0) {
-          
-?>
-            </div>
-        </div>
         <div class="container">
             <div class="row">
 <?php
-        }
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            if ($counter > 0 && $counter % 3 === 0) {
+              
+?>
+                </div>
+            </div>
+            <div class="container">
+                <div class="row">
+<?php
+            }
 ?>
               
-            <div class="col-12 col-sm-6 col-lg-4">
-                <a href="../job/detailsoffers/?id=<?php echo $row["id"]?>">
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
-                            <p class="offerts-cost">
-                                <span class="offerts-jobet">
-                                    <?php echo $row['wymiar_etatu'];?>
-                                </span>
-                                <span class="offerts-salary">Zarobki:
-                                    <?php echo $row['widelki_wynagrodzenia']; ?>
-                                </span>
-                            </p>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-5 col-sm-4">
-                                        <?php
-                                            echo "<img src='data:image;base64,".base64_encode($row["image"])."' height='300px'>";
-                                        ?>
-                                    </div>
-                                    <div class="col-7 col-sm-8">
-                                        <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?></span>
-                                        <p class="adress-offerts">
-                                            <img src="../images/lokalizacjaikona.png" style="height:15px">
-                                            <?php echo $row['adres']; ?>
-                                            <span class="offerts-iconsave">
-                                                <img src="../images/saveicon.png" style="height:20px; margin-left:180px; margin-top:-50px">
-                                            </span>
-                                        </p>
+                <div class="col-12 col-sm-6 col-lg-4">
+                    <a href="../job/detailsoffers/?id=<?php echo $row["id"]?>">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title"><?php echo $row['nazwa']; ?></h5>
+                                <p class="offerts-cost">
+                                    <span class="offerts-jobet">
+                                        <?php echo $row['wymiar_etatu'];?>
+                                    </span>
+                                    <span class="offerts-salary">Zarobki:
+                                        <?php echo $row['widelki_wynagrodzenia']; ?>
+                                    </span>
+                                </p>
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-5 col-sm-4">
+                                            <?php
+                                                echo "<img src='data:image;base64,".base64_encode($row["image"])."' height='300px'>";
+                                            ?>
+                                        </div>
+                                        <div class="col-7 col-sm-8">
+                                            <span id="name-offerts"><?php echo $row['nazwa_firmy']; ?></span>
+                                            <p class="adress-offerts">
+                                                <img src="../images/lokalizacjaikona.png" style="height:15px">
+                                                <?php echo $row['adres']; ?>
+                                                <span class="offerts-iconsave">
+                                                    <img src="../images/saveicon.png" style="height:20px; margin-left:180px; margin-top:-50px">
+                                                </span>
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </a>
+                    </a>
+                </div>
+<?php
+            $counter++;
+        }
+?>
             </div>
-<?php
-        $counter++;
-    }
-?>
         </div>
-    </div></div>
 <?php
-} else {
-    echo "Brak wyników";
+    } else {
+        echo "Brak wyników";
+    }
+    $dbh = null;
+} catch(PDOException $e) {
+    echo $e->getMessage();
 }
-$conn->close();
 ?>
+
 
 
 
