@@ -22,21 +22,10 @@ if (isset($_POST['submit'])) {
 
     $kodWeryfikacyjny = generujKodWeryfikacyjny();
 
-    $_SESSION['registration_data'] = [
-        'usermail' => $email,
-        'password' => $password,
-        'cpassword' => $confirmPassword,
-        'checkboxfirma' => $firma,
-        'verification_code' => $kodWeryfikacyjny,
-    ];
+    $select = "SELECT * FROM konto WHERE email = '$email'";
+    $result = mysqli_query($conn, $select);
 
-    $select = "SELECT * FROM konto WHERE email = ?";
-    $stmt = $conn->prepare($select);
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
+    if (mysqli_num_rows($result) > 0) {
         $error[] = 'Na tym mailu jest już założone konto!';
     } else {
         if ($password != $confirmPassword) {
@@ -44,57 +33,59 @@ if (isset($_POST['submit'])) {
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $zweryfikowany = "NIE";
-            $insert = "INSERT INTO konto(email, haslo, admin, firma, zweryfikowany) VALUES(?, ?, ?, ?, ?)";
-            $stmt = $conn->prepare($insert);
-            $stmt->bind_param("sssss", $email, $hashedPassword, $admin, $firma, $zweryfikowany);
-            $stmt->execute();
-            $lastInsertedId = $stmt->insert_id;
+            $insert = "INSERT INTO konto(email, haslo, admin, firma, zweryfikowany) VALUES('$email', '$hashedPassword', '$admin', '$firma', '$zweryfikowany')";
+            $result = mysqli_query($conn, $insert);
 
-            $insertFirma = "INSERT INTO firma(konto_id) VALUES (?)";
-            $stmt = $conn->prepare($insertFirma);
-            $stmt->bind_param("i", $lastInsertedId);
-            $stmt->execute();
+            if ($result) {
+                $lastInsertedId = mysqli_insert_id($conn);
 
-            $mail = new PHPMailer(true);
+                $insertFirma = "INSERT INTO firma(konto_id) VALUES ('$lastInsertedId')";
+                $resultFirma = mysqli_query($conn, $insertFirma);
 
-            try {
-                $mail->isSMTP();
-                $mail->Host = 'smtp.office365.com';
-                $mail->SMTPAuth = true;
-                $mail->Username = 'projektofertypracy123545@outlook.com';
-                $mail->Password = 'Haslo12345';
-                $mail->SMTPSecure = 'tls';
-                $mail->Port = 587;
-                $mail->SMTPDebug = 2;
-                $mail->setFrom('projektofertypracy123545@outlook.com', 'Projekt Oferty Pracy');
-                $mail->addAddress($email);
-                $mail->isHTML(true);
+                if ($resultFirma) {
+                    $mail = new PHPMailer(true);
 
-                $mail->Subject = 'Kod weryfikacyjny rejestracji';
-                $mail->Body = "Twój kod weryfikacyjny to: $kodWeryfikacyjny";
+                    try {
+                        $mail->isSMTP();
+                        $mail->Host = 'smtp.office365.com';
+                        $mail->SMTPAuth = true;
+                        $mail->Username = 'projektofertypracy123545@outlook.com';
+                        $mail->Password = 'Haslo12345';
+                        $mail->SMTPSecure = 'tls';
+                        $mail->Port = 587;
+                        $mail->SMTPDebug = 2;
+                        $mail->setFrom('projektofertypracy123545@outlook.com', 'Projekt Oferty Pracy');
+                        $mail->addAddress($email);
+                        $mail->isHTML(true);
 
-                $mail->send();
+                        $mail->Subject = 'Kod weryfikacyjny rejestracji';
+                        $mail->Body = "Twój kod weryfikacyjny to: $kodWeryfikacyjny";
 
-                header('location: ../verificationregister/');
-                exit;
-            } catch (Exception $e) {
-                $error[] = "Wystąpił błąd podczas wysyłania wiadomości: {$mail->ErrorInfo}";
+                        $mail->send();
+
+                        header('location: ../verificationregister/?verification_code=' . $kodWeryfikacyjny . '&usermail=' . urlencode($email));
+                        exit;
+                    } catch (Exception $e) {
+                        $error[] = "Wystąpił błąd podczas wysyłania wiadomości: {$mail->ErrorInfo}";
+                    }
+                } else {
+                    $error[] = 'Błąd podczas dodawania danych do tabeli "firma": ' . mysqli_error($conn);
+                }
+            } else {
+                $error[] = 'Błąd podczas dodawania danych do tabeli "konto": ' . mysqli_error($conn);
             }
         }
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../loginstyle/style.css">
 </head>
-
 <body>
     <div class="form-container">
         <form action="" method="post">
@@ -127,5 +118,4 @@ if (isset($_POST['submit'])) {
         </form>
     </div>
 </body>
-
 </html>
