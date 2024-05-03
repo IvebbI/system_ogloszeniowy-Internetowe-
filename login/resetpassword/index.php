@@ -25,7 +25,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['reset_userid'] = $userid;
         $_SESSION['reset_email'] = $email;
 
-        $resetLink = 'http://localhost/system_ogloszeniowy-Internetowe-/login/resetpasswordconfirm/?token=' . $resetToken;
+        $resetLink = 'https://karol.astosoft.pl/login/resetpasswordconfirm/?token=' . $resetToken;
 
         $mail = new PHPMailer(true);
 

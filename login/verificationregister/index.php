@@ -2,38 +2,46 @@
 @include '../../connection/index.php';
 session_start();
 
-if (isset($_POST['submit'])) {
-    $email = mysqli_real_escape_string($conn, $_POST['usermail']);
-    $kodWeryfikacyjny = mysqli_real_escape_string($conn, $_POST['verification_code']);
-    $oldVerificationCode = $_GET['verification_code'];
+if (isset($_GET['verification_code']) && isset($_GET['usermail'])) {
+    $email = mysqli_real_escape_string($conn, $_GET['usermail']);
+    $kodWeryfikacyjny = mysqli_real_escape_string($conn, $_GET['verification_code']);
 
-    if ($kodWeryfikacyjny == $oldVerificationCode) {
-        $admin = "NIE";
+    // Pobierz stare dane zweryfikacyjnego kodu z bazy
+    $select = "SELECT zweryfikowany FROM konto WHERE email = '$email'";
+    $result = mysqli_query($conn, $select);
 
-        $insert = "UPDATE konto SET zweryfikowany='TAK' WHERE email='$email'";
-        $result = mysqli_query($conn, $insert);
+    if ($result && mysqli_num_rows($result) > 0) {
+        $row = mysqli_fetch_assoc($result);
+        $oldVerificationStatus = $row['zweryfikowany'];
 
-        if ($result) {
-            $select = "SELECT * FROM konto WHERE email = '$email'";
-            $result_select = mysqli_query($conn, $select);
-            if ($result_select) {
-                $userData = mysqli_fetch_assoc($result_select);
+        // Sprawdź, czy użytkownik już nie został zweryfikowany
+        if ($oldVerificationStatus === 'TAK') {
+            echo "Twoje konto zostało już zweryfikowane!";
+            exit;
+        }
 
-                session_destroy();
+        // Sprawdź, czy kod weryfikacyjny jest poprawny
+        if ($kodWeryfikacyjny == $_GET['verification_code']) {
+            $insert = "UPDATE konto SET zweryfikowany='TAK' WHERE email='$email'";
+            $result = mysqli_query($conn, $insert);
 
-                header('location:../../main/');
+            if ($result) {
+                echo "Twoje konto zostało pomyślnie zweryfikowane!";
                 exit;
             } else {
-                $error[] = 'Błąd podczas pobierania danych z bazy: ' . mysqli_error($conn);
+                echo "Błąd podczas aktualizowania danych w bazie: " . mysqli_error($conn);
             }
         } else {
-            $error[] = 'Błąd podczas aktualizowania danych w bazie: ' . mysqli_error($conn);
+            echo "Nieprawidłowy kod weryfikacyjny!";
         }
     } else {
-        $error[] = 'Nieprawidłowy kod weryfikacyjny!';
+        echo "Nieprawidłowy adres e-mail lub użytkownik nie istnieje!";
     }
+} else {
+    echo "Brak kodu weryfikacyjnego lub adresu e-mail!";
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

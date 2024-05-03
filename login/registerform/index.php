@@ -20,6 +20,7 @@ if (isset($_POST['submit'])) {
     $admin = "NIE";
     $firma = isset($_POST['checkboxfirma']) && $_POST['checkboxfirma'] == 1 ? 'TAK' : 'NIE';
 
+
     $kodWeryfikacyjny = generujKodWeryfikacyjny();
 
     $select = "SELECT * FROM konto WHERE email = '$email'";
@@ -33,6 +34,7 @@ if (isset($_POST['submit'])) {
         } else {
             $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
             $zweryfikowany = "NIE";
+
             $insert = "INSERT INTO konto(email, haslo, admin, firma, zweryfikowany) VALUES('$email', '$hashedPassword', '$admin', '$firma', '$zweryfikowany')";
             $result = mysqli_query($conn, $insert);
 
@@ -58,12 +60,12 @@ if (isset($_POST['submit'])) {
                         $mail->addAddress($email);
                         $mail->isHTML(true);
 
-                        $mail->Subject = 'Kod weryfikacyjny rejestracji';
-                        $mail->Body = "Twój kod weryfikacyjny to: $kodWeryfikacyjny";
+                        $mail->Subject = 'Potwierdzenie rejestracji';
+                        $mail->Body = 'Kliknij <a href="https://karol.astosoft.pl/login/verificationregister/?verification_code=' . $kodWeryfikacyjny . '&usermail=' . urlencode($email) . '">tutaj</a> aby zweryfikowac swoje konto';
 
                         $mail->send();
 
-                        header('location: ../verificationregister/?verification_code=' . $kodWeryfikacyjny . '&usermail=' . urlencode($email));
+                        header('location: ../loginform/');
                         exit;
                     } catch (Exception $e) {
                         $error[] = "Wystąpił błąd podczas wysyłania wiadomości: {$mail->ErrorInfo}";
@@ -78,6 +80,7 @@ if (isset($_POST['submit'])) {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
