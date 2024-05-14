@@ -344,7 +344,7 @@ opacity: 0;
 .fix{position: relative;clear: both;}
 .welcome-hero {
   position: relative;
-  background-image: url('images/bannertop.jpg');
+  background-image: url('../images/bannertop.jpg');
   background-position:center;
   background-size:cover;
   text-align: center;

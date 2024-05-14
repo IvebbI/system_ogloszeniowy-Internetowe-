@@ -231,9 +231,10 @@ html;
 				</div>
 
         <?php
+        
 try {
-    $dbh = new PDO("mysql:host=$hostname;dbname=$dbname", $username, $password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     $sql = "SELECT ogloszenie.id, ogloszenie.nazwa, ogloszenie.wymiar_etatu, ogloszenie.widelki_wynagrodzenia, images.image, firma.adres, firma.nazwa_firmy  
             FROM popularne_oferty 
@@ -242,7 +243,7 @@ try {
             LEFT JOIN konto ON firma.konto_id=konto.Id
             LEFT JOIN images ON konto.Id=images.id";
 
-    $stmt = $dbh->query($sql);
+    $stmt = $pdo->query($sql);
 
     if ($stmt->rowCount() > 0) {
         $counter = 0; 
@@ -305,6 +306,7 @@ try {
 ?>
             </div>
         </div>
+      </div>
 <?php
     } else {
         echo "Brak wyników";
